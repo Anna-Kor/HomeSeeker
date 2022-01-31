@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using HomeSeeker_API.Data;
 using Microsoft.EntityFrameworkCore;
+using HomeSeeker_API.Repositories;
 
 namespace HomeSeeker_API
 {
@@ -43,6 +44,7 @@ namespace HomeSeeker_API
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
+            services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddControllers();
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
