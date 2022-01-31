@@ -26,7 +26,7 @@ namespace HomeSeeker_API.Controllers
         }
 
         [HttpPost("AddHome")]
-        public IActionResult Add([FromBody] Home home)
+        public async Task<IActionResult> Add([FromBody] Home home)
         {
             Home newHome = new Home();
 
@@ -51,23 +51,22 @@ namespace HomeSeeker_API.Controllers
             try
             {
                 _dbContext.Homes.Add(newHome);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home added successfully");
         }
 
         [HttpPut("UpdateHome")]
-        public IActionResult Update([FromBody] Home home)
+        public async Task<IActionResult> Update([FromBody] Home home)
         {
             try
             {
-                var newHome = _dbContext.Homes.FirstOrDefault(x => x.Id == home.Id);
+                var newHome = _dbContext.Homes.FirstOrDefault(h => h.Id == home.Id);
                 if (newHome == null)
                 {
                     return StatusCode(404, "Home not found");
@@ -92,38 +91,36 @@ namespace HomeSeeker_API.Controllers
                 newHome.Description = home.Description;
 
                 _dbContext.Entry(newHome).State = EntityState.Modified;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home updated successfully");
         }
 
         [HttpDelete("DeleteHome/{Id}")]
-        public IActionResult Delete([FromRoute] int Id)
+        public async Task<IActionResult> Delete([FromRoute] int Id)
         {
             try
             {
-                var newHome = _dbContext.Homes.FirstOrDefault(x => x.Id == Id);
+                var newHome = _dbContext.Homes.FirstOrDefault(h => h.Id == Id);
                 if (newHome == null)
                 {
                     return StatusCode(404, "Home not found");
                 }
 
                 _dbContext.Entry(newHome).State = EntityState.Deleted;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home deleted successfully"); ;
         }
     }
 }

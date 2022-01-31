@@ -27,11 +27,11 @@ namespace HomeSeeker_API.Controllers
         }
 
         [HttpGet("GetActiveHomes")]
-        public IActionResult GetActive([FromQuery] string name, [FromQuery] decimal minPrice, [FromQuery] decimal? maxPrice, [FromQuery] string city, [FromQuery] int minLivingArea, [FromQuery] int? maxLivingArea, [FromQuery] int? categoryId, [FromQuery] int? typeId, [FromQuery] int? floorId, [FromQuery] int? floorsNumberId, [FromQuery] string furniture, [FromQuery] int? roomsNumberId, [FromQuery] int? bathroomsId)
+        public async Task<IActionResult> GetActive([FromQuery] string name, [FromQuery] decimal minPrice, [FromQuery] decimal? maxPrice, [FromQuery] string city, [FromQuery] int minLivingArea, [FromQuery] int? maxLivingArea, [FromQuery] int? categoryId, [FromQuery] int? typeId, [FromQuery] int? floorId, [FromQuery] int? floorsNumberId, [FromQuery] string furniture, [FromQuery] int? roomsNumberId, [FromQuery] int? bathroomsId)
         {
             try
             {
-                var homes = _dbContext.Homes.Where(h =>
+                var homes = await _dbContext.Homes.Where(h =>
                     (String.IsNullOrEmpty(name) || h.Name.Contains(name, StringComparison.OrdinalIgnoreCase)) &&
                     h.Price + h.Rent >= minPrice && (maxPrice == null || h.Price + h.Rent <= maxPrice) &&
                     (String.IsNullOrEmpty(city) || h.City.Equals(city, StringComparison.OrdinalIgnoreCase)) &&
@@ -45,7 +45,7 @@ namespace HomeSeeker_API.Controllers
                     (roomsNumberId == null || h.RoomsNumberId == roomsNumberId) &&
                     (bathroomsId == null || h.BathroomsId == bathroomsId) &&
                     (h.StatusId != 3)
-                ).ToList();
+                ).ToListAsync();
                 if (homes.Count == 0)
                 {
                     return StatusCode(404, "No homes found");
