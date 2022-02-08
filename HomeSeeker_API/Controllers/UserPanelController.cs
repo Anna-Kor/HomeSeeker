@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using HomeSeeker_API.Repositories;
+using System.Data.Entity.Core;
 
 namespace HomeSeeker_API.Controllers
 {
@@ -16,114 +18,62 @@ namespace HomeSeeker_API.Controllers
     [ApiController]
     public class UserPanelController : ControllerBase
     {
-        private readonly HomeSeekerDBContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly IHomeRepository _homeRepository;
 
-        public UserPanelController(HomeSeekerDBContext dbContext, IConfiguration configuration)
+        public UserPanelController(IConfiguration configuration, IHomeRepository homeRepository)
         {
-            _dbContext = dbContext;
             _configuration = configuration;
+            _homeRepository = homeRepository;
         }
 
         [HttpPost("AddHome")]
-        public IActionResult Add([FromBody] Home home)
+        public async Task<IActionResult> Add([FromBody] Home home)
         {
-            Home newHome = new Home();
-
-            newHome.Name = home.Name;
-            newHome.Price = home.Price;
-            newHome.Rent = home.Rent;
-            newHome.Lon = home.Lon;
-            newHome.Lat = home.Lat;
-            newHome.City = home.City;
-            newHome.LivingArea = home.LivingArea;
-            newHome.LotArea = home.LotArea;
-            newHome.CategoryId = home.CategoryId;
-            newHome.TypeId = home.TypeId;
-            newHome.FloorId = home.FloorId;
-            newHome.FloorsNumberId = home.FloorsNumberId;
-            newHome.Furniture = home.Furniture;
-            newHome.RoomsNumberId = home.RoomsNumberId;
-            newHome.BathroomsId = home.BathroomsId;
-            newHome.StatusId = home.StatusId;
-            newHome.Description = home.Description;
-
             try
             {
-                _dbContext.Homes.Add(newHome);
-                _dbContext.SaveChanges();
+                await _homeRepository.Add(home);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home added successfully");
         }
 
         [HttpPut("UpdateHome")]
-        public IActionResult Update([FromBody] Home home)
+        public async Task<IActionResult> Update([FromBody] Home home)
         {
             try
             {
-                var newHome = _dbContext.Homes.FirstOrDefault(x => x.Id == home.Id);
-                if (newHome == null)
-                {
-                    return StatusCode(404, "Home not found");
-                }
-
-                newHome.Name = home.Name;
-                newHome.Price = home.Price;
-                newHome.Rent = home.Rent;
-                newHome.Lon = home.Lon;
-                newHome.Lat = home.Lat;
-                newHome.City = home.City;
-                newHome.LivingArea = home.LivingArea;
-                newHome.LotArea = home.LotArea;
-                newHome.CategoryId = home.CategoryId;
-                newHome.TypeId = home.TypeId;
-                newHome.FloorId = home.FloorId;
-                newHome.FloorsNumberId = home.FloorsNumberId;
-                newHome.Furniture = home.Furniture;
-                newHome.RoomsNumberId = home.RoomsNumberId;
-                newHome.BathroomsId = home.BathroomsId;
-                newHome.StatusId = home.StatusId;
-                newHome.Description = home.Description;
-
-                _dbContext.Entry(newHome).State = EntityState.Modified;
-                _dbContext.SaveChanges();
+                await _homeRepository.Update(home);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                return StatusCode(404, "Home not found");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home updated successfully");
         }
 
         [HttpDelete("DeleteHome/{Id}")]
-        public IActionResult Delete([FromRoute] int Id)
+        public async Task<IActionResult> Delete([FromRoute] int Id)
         {
             try
             {
-                var newHome = _dbContext.Homes.FirstOrDefault(x => x.Id == Id);
-                if (newHome == null)
-                {
-                    return StatusCode(404, "Home not found");
-                }
-
-                _dbContext.Entry(newHome).State = EntityState.Deleted;
-                _dbContext.SaveChanges();
+                await _homeRepository.Delete(Id);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error has occured");
             }
 
-            var homes = _dbContext.Homes.ToList();
-            return Ok(homes);
+            return StatusCode(200, "Home deleted successfully"); ;
         }
     }
 }
