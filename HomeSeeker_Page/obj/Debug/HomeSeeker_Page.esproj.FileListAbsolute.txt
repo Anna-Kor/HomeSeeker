@@ -1,0 +1,2 @@
+C:\Users\annak\Documents\GitHub\HomeSeeker\HomeSeeker_Page\obj\Debug\HomeSeeker_Page.esproj.SuggestedBindingRedirects.cache
+C:\Users\annak\Documents\GitHub\HomeSeeker\HomeSeeker_Page\obj\Debug\HomeSeeker_Page.esproj.CoreCompileInputs.cache
