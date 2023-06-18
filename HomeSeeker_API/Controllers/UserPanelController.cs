@@ -1,15 +1,12 @@
-﻿using HomeSeeker_API.Data;
-using HomeSeeker_API.Models;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Data.Entity.Core;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+
+using HomeSeeker_API.Models;
 using HomeSeeker_API.Repositories;
-using System.Data.Entity.Core;
 
 namespace HomeSeeker_API.Controllers
 {

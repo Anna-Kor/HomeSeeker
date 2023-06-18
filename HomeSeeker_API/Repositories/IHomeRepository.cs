@@ -1,8 +1,7 @@
-﻿using HomeSeeker_API.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using HomeSeeker_API.Models;
 
 namespace HomeSeeker_API.Repositories
 {

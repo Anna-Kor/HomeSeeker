@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+
 using HomeSeeker_API.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace HomeSeeker_API.Data
 {

@@ -1,18 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Newtonsoft.Json.Serialization;
+
 using HomeSeeker_API.Data;
-using Microsoft.EntityFrameworkCore;
 using HomeSeeker_API.Repositories;
 
 namespace HomeSeeker_API
@@ -46,6 +41,7 @@ namespace HomeSeeker_API
 
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddControllers();
+            services.AddSwaggerGen();
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
             services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString));
@@ -60,6 +56,9 @@ namespace HomeSeeker_API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
