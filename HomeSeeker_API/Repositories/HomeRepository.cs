@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -91,7 +90,7 @@ namespace HomeSeeker_API.Repositories
                 var newHome = _dbContext.Homes.FirstOrDefault(h => h.Id == home.Id);
                 if (newHome == null)
                 {
-                    throw new ObjectNotFoundException();
+                    throw new NullReferenceException();
                 }
 
                 newHome.Name = home.Name;
@@ -115,7 +114,7 @@ namespace HomeSeeker_API.Repositories
                 _dbContext.Entry(newHome).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 throw ex;
             }
@@ -128,7 +127,7 @@ namespace HomeSeeker_API.Repositories
                 var newHome = _dbContext.Homes.FirstOrDefault(h => h.Id == Id);
                 if (newHome == null)
                 {
-                    throw new ObjectNotFoundException();
+                    throw new NullReferenceException();
                 }
 
                 _dbContext.Entry(newHome).State = EntityState.Deleted;

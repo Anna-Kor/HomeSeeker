@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity.Core;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +45,7 @@ namespace HomeSeeker_API.Controllers
             {
                 await _homeRepository.Update(home);
             }
-            catch (ObjectNotFoundException ex)
+            catch (NullReferenceException ex)
             {
                 return StatusCode(404, "Home not found");
             }
