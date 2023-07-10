@@ -7,11 +7,9 @@ namespace HomeSeeker_API.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
         public int Id { get; set; }
 
         [Required]
-        [Column("name")]
         public string Name { get; set; }
     }
 }
