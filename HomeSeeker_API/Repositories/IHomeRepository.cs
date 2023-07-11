@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using HomeSeeker_API.Models;
+using Data.Models;
 
 namespace HomeSeeker_API.Repositories
 {

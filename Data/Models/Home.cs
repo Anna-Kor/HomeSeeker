@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HomeSeeker_API.Models
+namespace Data.Models
 {
     public class Home
     {

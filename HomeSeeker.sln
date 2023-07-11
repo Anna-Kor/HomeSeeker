@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeSeeker_API", "HomeSeeke
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "HomeSeeker_Page", "HomeSeeker_Page\HomeSeeker_Page.esproj", "{EE76A903-B18A-4277-ABED-57FC35552C00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{F509AC2B-4431-4892-9EF9-4546A150A5E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{EE76A903-B18A-4277-ABED-57FC35552C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE76A903-B18A-4277-ABED-57FC35552C00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE76A903-B18A-4277-ABED-57FC35552C00}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F509AC2B-4431-4892-9EF9-4546A150A5E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F509AC2B-4431-4892-9EF9-4546A150A5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F509AC2B-4431-4892-9EF9-4546A150A5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F509AC2B-4431-4892-9EF9-4546A150A5E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

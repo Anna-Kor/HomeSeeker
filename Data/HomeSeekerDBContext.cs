@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Models;
 
-using HomeSeeker_API.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace HomeSeeker_API.Data
+namespace Data
 {
     public class HomeSeekerDBContext : DbContext
     {
@@ -18,6 +18,6 @@ namespace HomeSeeker_API.Data
         public DbSet<Home> Homes { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<Type> Types { get; set; }
+        public DbSet<Models.Type> Types { get; set; }
     }
 }

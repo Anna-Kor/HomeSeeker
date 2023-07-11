@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 using Newtonsoft.Json.Serialization;
 
-using HomeSeeker_API.Data;
+using Data;
 using HomeSeeker_API.Repositories;
 
 namespace HomeSeeker_API
@@ -44,7 +44,7 @@ namespace HomeSeeker_API
             services.AddSwaggerGen();
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
-            services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-using HomeSeeker_API.Models;
+using Data.Models;
 using HomeSeeker_API.Repositories;
 
 namespace HomeSeeker_API.Controllers

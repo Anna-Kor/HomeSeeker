@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HomeSeeker_API.Models
+namespace Data.Models
 {
-    public class FloorsNumbers
+    public class Status
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        public string FloorNumber { get; set; }
+        public string Name { get; set; }
     }
 }

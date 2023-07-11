@@ -1,5 +1,5 @@
-﻿using HomeSeeker_API.Data;
-using HomeSeeker_API.Models;
+﻿using Data;
+using Data.Models;
 
 using Microsoft.EntityFrameworkCore;
 

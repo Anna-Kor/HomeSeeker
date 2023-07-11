@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace HomeSeeker_API.Migrations
+namespace Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -89,7 +89,7 @@ namespace HomeSeeker_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Types",
+                name: "Type",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -98,7 +98,7 @@ namespace HomeSeeker_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Types", x => x.Id);
+                    table.PrimaryKey("PK_Type", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,11 +117,11 @@ namespace HomeSeeker_API.Migrations
                     LotArea = table.Column<int>(type: "int", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false),
-                    FloorId = table.Column<int>(type: "int", nullable: true),
+                    FloorId = table.Column<int>(type: "int", nullable: false),
                     FloorsNumberId = table.Column<int>(type: "int", nullable: true),
                     Furniture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomsNumberId = table.Column<int>(type: "int", nullable: true),
-                    BathroomsId = table.Column<int>(type: "int", nullable: true),
+                    BathroomsId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -132,7 +132,8 @@ namespace HomeSeeker_API.Migrations
                         name: "FK_Homes_Bathrooms_BathroomsId",
                         column: x => x.BathroomsId,
                         principalTable: "Bathrooms",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Homes_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -148,7 +149,8 @@ namespace HomeSeeker_API.Migrations
                         name: "FK_Homes_Floors_FloorId",
                         column: x => x.FloorId,
                         principalTable: "Floors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Homes_Rooms_RoomsNumberId",
                         column: x => x.RoomsNumberId,
@@ -161,9 +163,9 @@ namespace HomeSeeker_API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Homes_Types_TypeId",
+                        name: "FK_Homes_Type_TypeId",
                         column: x => x.TypeId,
-                        principalTable: "Types",
+                        principalTable: "Type",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -229,7 +231,7 @@ namespace HomeSeeker_API.Migrations
                 name: "Statuses");
 
             migrationBuilder.DropTable(
-                name: "Types");
+                name: "Type");
         }
     }
 }
