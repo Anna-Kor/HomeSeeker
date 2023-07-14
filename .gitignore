@@ -1,2 +1,4 @@
 .vs/*
 /HomeSeeker_API/appsettings.json
+**/bin/*
+**/obj/*
