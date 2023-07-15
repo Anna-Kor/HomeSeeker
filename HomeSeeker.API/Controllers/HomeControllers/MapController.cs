@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+
 using HomeSeeker.API.Repositories.HomeRepositories;
-using System.Threading.Tasks;
+
 using System;
+using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.HomeControllers
 {

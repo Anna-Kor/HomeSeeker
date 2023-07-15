@@ -8,7 +8,12 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 
 using Data;
+
 using HomeSeeker.API.Repositories.HomeRepositories;
+using HomeSeeker.API.Authorization.Utils;
+using HomeSeeker.API.Services.UserService;
+using HomeSeeker.API.Authorization;
+using HomeSeeker.API.Authorization.Helpers;
 
 namespace HomeSeeker.API
 {
@@ -43,8 +48,13 @@ namespace HomeSeeker.API
             services.AddControllers();
             services.AddSwaggerGen();
 
+            services.AddScoped<IJwtUtils, JwtUtils>();
+            services.AddScoped<IUserService, UserService>();
+
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
             services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +76,8 @@ namespace HomeSeeker.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

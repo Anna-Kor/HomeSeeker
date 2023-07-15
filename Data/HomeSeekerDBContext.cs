@@ -19,5 +19,6 @@ namespace Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Models.Type> Types { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 
 using Data.Models;
+
 using HomeSeeker.API.Repositories.HomeRepositories;
+
 using System;
 using System.Threading.Tasks;
 
