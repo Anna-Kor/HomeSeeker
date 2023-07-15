@@ -1,4 +1,7 @@
 .vs/*
-/HomeSeeker_API/appsettings.json
+HomeSeeker.API/appsettings.Development.json
+HomeSeeker_API/appsettings.Test.json
+HomeSeeker_API/appsettings.Production.json
 **/bin/*
 **/obj/*
+

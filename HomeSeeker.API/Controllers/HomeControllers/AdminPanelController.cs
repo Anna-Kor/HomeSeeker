@@ -1,23 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using HomeSeeker.API.Repositories.HomeRepositories;
 using System.Threading.Tasks;
+using System;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-
-using HomeSeeker_API.Repositories;
-
-namespace HomeSeeker_API.Controllers
+namespace HomeSeeker.API.Controllers.HomeControllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AdminPanelController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IHomeRepository _homeRepository;
 
-        public AdminPanelController(IConfiguration configuration, IHomeRepository homeRepository)
+        public AdminPanelController(IHomeRepository homeRepository)
         {
-            _configuration = configuration;
             _homeRepository = homeRepository;
         }
 

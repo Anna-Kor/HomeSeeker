@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace HomeSeeker_API
+namespace HomeSeeker.API
 {
     public class Program
     {

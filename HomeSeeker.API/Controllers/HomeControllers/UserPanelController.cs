@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 using Data.Models;
-using HomeSeeker_API.Repositories;
+using HomeSeeker.API.Repositories.HomeRepositories;
+using System;
+using System.Threading.Tasks;
 
-namespace HomeSeeker_API.Controllers
+namespace HomeSeeker.API.Controllers.HomeControllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class UserPanelController : ControllerBase

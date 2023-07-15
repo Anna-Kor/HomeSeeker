@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using HomeSeeker.API.Repositories.HomeRepositories;
+using System.Threading.Tasks;
+using System;
 
-using HomeSeeker_API.Repositories;
-
-namespace HomeSeeker_API.Controllers
+namespace HomeSeeker.API.Controllers.HomeControllers
 {
     [Route("api/[controller]")]
     [ApiController]

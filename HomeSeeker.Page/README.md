@@ -1,4 +1,4 @@
-# HomeSeeker_Page
+# HomeSeeker.Page
 
 ## Project setup
 ```

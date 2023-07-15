@@ -2,13 +2,12 @@
 using Data.Models;
 
 using Microsoft.EntityFrameworkCore;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeSeeker_API.Repositories
+namespace HomeSeeker.API.Repositories.HomeRepositories
 {
     public class HomeRepository : IHomeRepository
     {
@@ -144,16 +143,16 @@ namespace HomeSeeker_API.Repositories
             try
             {
                 List<Home> homes = await _dbContext.Homes.Where(h =>
-                    (String.IsNullOrEmpty(name) || h.Name.ToUpper().Contains(name.ToUpper())) &&
+                    (string.IsNullOrEmpty(name) || h.Name.ToUpper().Contains(name.ToUpper())) &&
                     h.Price + h.Rent >= minPrice && (maxPrice == null || h.Price + h.Rent <= maxPrice) &&
-                    (String.IsNullOrEmpty(city) || h.City.ToUpper().Equals(city.ToUpper())) &&
-                    (h.LivingArea >= minLivingArea &&
-                    (maxLivingArea == null || h.LivingArea <= maxLivingArea)) &&
+                    (string.IsNullOrEmpty(city) || h.City.ToUpper().Equals(city.ToUpper())) &&
+                    h.LivingArea >= minLivingArea &&
+                    (maxLivingArea == null || h.LivingArea <= maxLivingArea) &&
                     (categoryId == null || h.CategoryId == categoryId) &&
                     (typeId == null || h.TypeId == typeId) &&
                     (floorId == null || h.FloorId == floorId) &&
                     (floorsNumberId == null || h.FloorsNumberId == floorsNumberId) &&
-                    (String.IsNullOrEmpty(furniture) || h.Furniture.ToUpper().Equals(furniture.ToUpper())) &&
+                    (string.IsNullOrEmpty(furniture) || h.Furniture.ToUpper().Equals(furniture.ToUpper())) &&
                     (roomsNumberId == null || h.RoomsNumberId == roomsNumberId) &&
                     (bathroomsId == null || h.BathroomsId == bathroomsId) &&
                     (statusId == null || h.StatusId == statusId)

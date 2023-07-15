@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,9 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 
 using Data;
-using HomeSeeker_API.Repositories;
+using HomeSeeker.API.Repositories.HomeRepositories;
 
-namespace HomeSeeker_API
+namespace HomeSeeker.API
 {
     public class Startup
     {

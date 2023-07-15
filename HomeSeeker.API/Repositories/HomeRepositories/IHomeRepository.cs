@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Data.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Data.Models;
-
-namespace HomeSeeker_API.Repositories
+namespace HomeSeeker.API.Repositories.HomeRepositories
 {
     public interface IHomeRepository
     {
