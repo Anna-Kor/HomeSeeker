@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 using Data.Models;
 
+using HomeSeeker.API.Authorization.Attributes;
 using HomeSeeker.API.Repositories.HomeRepositories;
 
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.HomeControllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserPanelController : ControllerBase

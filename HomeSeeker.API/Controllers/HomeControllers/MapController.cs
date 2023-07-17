@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
+using HomeSeeker.API.Authorization.Attributes;
 using HomeSeeker.API.Repositories.HomeRepositories;
 
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.HomeControllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MapController : ControllerBase

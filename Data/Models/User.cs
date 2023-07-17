@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Data.Models
 {
@@ -20,5 +20,9 @@ namespace Data.Models
         [JsonIgnore]
         [Required]
         public string Password { get; set; }
+
+        [JsonIgnore]
+        [Required]
+        public byte[] Salt { get; set; }
     }
 }

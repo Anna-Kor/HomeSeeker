@@ -4,16 +4,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 using Newtonsoft.Json.Serialization;
 
 using Data;
 
-using HomeSeeker.API.Repositories.HomeRepositories;
 using HomeSeeker.API.Authorization.Utils;
-using HomeSeeker.API.Services.UserService;
 using HomeSeeker.API.Authorization;
 using HomeSeeker.API.Authorization.Helpers;
+using HomeSeeker.API.Commands;
+using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Models;
+using HomeSeeker.API.Queries;
+using HomeSeeker.API.Queries.UserQueries;
+using HomeSeeker.API.Repositories.HomeRepositories;
+using HomeSeeker.API.Repositories.UserRepositories;
+
+using MediatR;
+
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace HomeSeeker.API
 {
@@ -45,14 +56,46 @@ namespace HomeSeeker.API
             });
 
             services.AddScoped<IHomeRepository, HomeRepository>();
-            services.AddControllers();
-            services.AddSwaggerGen();
-
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<IJwtUtils, JwtUtils>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRequestHandler<RegisterUser>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, UsersQueryHandler>();
+
+            services.AddControllers();
+            services.AddSwaggerGen(option =>
+            {
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+            });
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
             services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }

@@ -1,8 +1,12 @@
 ﻿using HomeSeeker.API.Authorization.Attributes;
-using HomeSeeker.API.Authorization.Model;
-using HomeSeeker.API.Services.UserService;
+using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Queries.UserQueries;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+
+using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.UserControllers
 {
@@ -12,29 +16,37 @@ namespace HomeSeeker.API.Controllers.UserControllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly ISender _mediator;
 
-        public UsersController(IUserService userService)
+        public UsersController(ISender mediator)
         {
-            _userService = userService;
+            _mediator = mediator;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterUser model)
+        {
+            await _mediator.Send(model);
+            return Ok();
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateQuery model)
         {
-            var response = _userService.Authenticate(model);
-
+            var response = await _mediator.Send(model);
             if (response == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
-
+            }
             return Ok(response);
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
+            var users = await _mediator.Send(new GetAllUsersQuery());
             return Ok(users);
         }
     }

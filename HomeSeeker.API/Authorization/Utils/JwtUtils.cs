@@ -1,15 +1,14 @@
-﻿using Data.Models;
-
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System;
-using System.Linq;
 
 using HomeSeeker.API.Authorization.Helpers;
+using HomeSeeker.API.Models;
 
 namespace HomeSeeker.API.Authorization.Utils
 {
@@ -25,7 +24,7 @@ namespace HomeSeeker.API.Authorization.Utils
                 throw new Exception("JWT secret not configured");
         }
 
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret!);
