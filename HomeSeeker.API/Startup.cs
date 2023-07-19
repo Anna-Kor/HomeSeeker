@@ -59,6 +59,7 @@ namespace HomeSeeker.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<IJwtUtils, JwtUtils>();
+
             services.AddScoped<IRequestHandler<RegisterUser>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, UsersQueryHandler>();
