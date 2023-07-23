@@ -4,29 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using HomeSeeker.API.Authorization.Utils;
+using HomeSeeker.API.Queries.UserQueries;
+
+using MediatR;
 
 namespace HomeSeeker.API.Authorization
 {
-    public class JwtMiddleware
+    public class JwtMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly IJwtUtils _jwtUtils;
+        private readonly IMediator _mediator;
 
-        public JwtMiddleware(RequestDelegate next)
+        public JwtMiddleware(IJwtUtils jwtUtils, IMediator mediator)
         {
-            _next = next;
+            _jwtUtils = jwtUtils;
+            _mediator = mediator;
         }
 
-        public async Task Invoke(HttpContext context, IJwtUtils jwtUtils)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-                var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                var userId = jwtUtils.ValidateJwtToken(token);
+            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = _jwtUtils.ValidateJwtToken(token);
 
-                if (userId != null)
-                {
-                    context.Items["UserId"] = userId;
-                }
+            if (userId != null)
+            {
+                context.Items["User"] = await _mediator.Send(new GetUserByIdQuery(userId.Value));
+            }
 
-                await _next(context);
+            await next(context);
         }
     }
 }

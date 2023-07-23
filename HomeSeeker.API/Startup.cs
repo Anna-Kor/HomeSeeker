@@ -25,6 +25,7 @@ using MediatR;
 
 using System.Reflection;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace HomeSeeker.API
 {
@@ -59,6 +60,7 @@ namespace HomeSeeker.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<IJwtUtils, JwtUtils>();
+            services.AddScoped<JwtMiddleware>();
 
             services.AddScoped<IRequestHandler<RegisterUser>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
