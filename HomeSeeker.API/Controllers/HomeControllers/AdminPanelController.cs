@@ -3,12 +3,14 @@
 using HomeSeeker.API.Authorization.Attributes;
 using HomeSeeker.API.Repositories.HomeRepositories;
 
+using Data.Enums;
+
 using System;
 using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.HomeControllers
 {
-    [Authorize]
+    [Authorize(Role.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminPanelController : ControllerBase

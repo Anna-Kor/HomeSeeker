@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Data.Enums;
+using Data.Models;
 
 using HomeSeeker.API.Authorization.Helpers;
 using HomeSeeker.API.Commands.UserCommands;
@@ -25,7 +26,7 @@ namespace HomeSeeker.API.Commands
         public async Task Handle(RegisterUser request, CancellationToken cancellationToken)
         {
             var hashedPassword = _passwordHelper.HashPassword(request.Password, out var salt);
-            var user = new User { FirstName = request.FirstName, LastName = request.LastName, Username = request.Username, Password = hashedPassword, Salt = salt };
+            var user = new User { FirstName = request.FirstName, LastName = request.LastName, Role = Role.User, Username = request.Username, Password = hashedPassword, Salt = salt };
             await _userRepository.Add(user);
         }
     }

@@ -1,10 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using Data.Enums;
+
+using Newtonsoft.Json;
 
 namespace HomeSeeker.API.Models
 {
     public class UserModel
     {
         public int Id { get; set; }
+
+        public Role Role { get; set; }
 
         public string Username { get; set; }
 

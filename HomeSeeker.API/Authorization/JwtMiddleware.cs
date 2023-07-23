@@ -8,7 +8,7 @@ using HomeSeeker.API.Queries.UserQueries;
 
 using MediatR;
 
-namespace HomeSeeker.API.Authorization
+namespace HomeSeeker.API.Authorization 
 {
     public class JwtMiddleware : IMiddleware
     {

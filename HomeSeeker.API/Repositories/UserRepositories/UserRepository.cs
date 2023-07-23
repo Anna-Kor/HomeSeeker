@@ -30,6 +30,7 @@ namespace HomeSeeker.API.Repositories.UserRepositories
                 List<UserModel> users = userEntities.Select(x => new UserModel
                 {
                     Id = x.Id,
+                    Role = x.Role,
                     Username = x.Username,
                     Password = x.Password,
                     Salt = x.Salt
@@ -50,6 +51,7 @@ namespace HomeSeeker.API.Repositories.UserRepositories
                 UserModel user = new UserModel
                 {
                     Id = userEntity.Id,
+                    Role = userEntity.Role,
                     Username = userEntity.Username,
                     Password = userEntity.Password,
                     Salt = userEntity.Salt
@@ -68,6 +70,7 @@ namespace HomeSeeker.API.Repositories.UserRepositories
 
             newUser.FirstName = user.FirstName;
             newUser.LastName = user.LastName;
+            newUser.Role = user.Role;
             newUser.Username = user.Username;
             newUser.Password = user.Password;
             newUser.Salt = user.Salt;

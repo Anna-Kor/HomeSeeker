@@ -6,12 +6,14 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Data.Enums;
+
 using System.Threading.Tasks;
 
 namespace HomeSeeker.API.Controllers.UserControllers
 {
 
-    [Authorize]
+    [Authorize(Role.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

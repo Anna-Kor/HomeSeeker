@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using Data.Enums;
+
 using Newtonsoft.Json;
 
 namespace Data.Models
@@ -9,6 +12,10 @@ namespace Data.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required]
+        [Column(TypeName = "int")]
+        public Role Role { get; set; } = Role.User;
 
         public string? FirstName { get; set; }
 
