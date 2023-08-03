@@ -59,6 +59,8 @@
 }
 
 body {
+  display: flex;
+  place-items: center;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
@@ -83,4 +85,14 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  min-height: 350px;
+}
+
+.btn-delete-user {
+  width: 40px;
+  text-align: center;
+  box-sizing: content-box;
 }

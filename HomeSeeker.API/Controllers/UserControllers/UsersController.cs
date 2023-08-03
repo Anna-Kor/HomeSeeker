@@ -1,14 +1,17 @@
 ﻿using HomeSeeker.API.Authorization.Attributes;
 using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Models;
 using HomeSeeker.API.Queries.UserQueries;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Data.Enums;
 
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace HomeSeeker.API.Controllers.UserControllers
 {
@@ -26,6 +29,7 @@ namespace HomeSeeker.API.Controllers.UserControllers
         }
 
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUser model)
         {
@@ -34,6 +38,8 @@ namespace HomeSeeker.API.Controllers.UserControllers
         }
 
         [AllowAnonymous]
+        [ProducesResponseType(typeof(AuthenticateResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AuthenticateResponse), StatusCodes.Status400BadRequest)]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(AuthenticateQuery model)
         {
@@ -45,6 +51,7 @@ namespace HomeSeeker.API.Controllers.UserControllers
             return Ok(response);
         }
 
+        [ProducesResponseType(typeof(List<UserModel>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

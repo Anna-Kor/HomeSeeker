@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 using Newtonsoft.Json.Serialization;
 
@@ -25,7 +24,8 @@ using MediatR;
 
 using System.Reflection;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 
 namespace HomeSeeker.API
 {
@@ -53,7 +53,7 @@ namespace HomeSeeker.API
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             }).AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
             services.AddScoped<IHomeRepository, HomeRepository>();
@@ -68,31 +68,22 @@ namespace HomeSeeker.API
             services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, UsersQueryHandler>();
 
             services.AddControllers();
-            services.AddSwaggerGen(option =>
-            {
-                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
-                });
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+            services.AddSwaggerDocument(config => {
+                config.DocumentProcessors.Add(new SecurityDefinitionAppender("Bearer",
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        new string[]{}
-                    }
-                });
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Please enter a valid token",
+                        Name = "Authorization",
+                        Type = OpenApiSecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    }));
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "HomeSeeker API";
+                };
             });
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
@@ -113,8 +104,8 @@ namespace HomeSeeker.API
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseOpenApi();
+                app.UseSwaggerUi3();
             }
 
             app.UseHttpsRedirection();
