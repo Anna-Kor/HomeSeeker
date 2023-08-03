@@ -1,0 +1,1 @@
+export * as HomePageVue from './HomePage.vue'
