@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { getErrorMessage } from '@/helpers';
 import { router } from '@/router';
 import { useAlertStore } from '@/stores';
-import { AuthenticateQuery, type IAuthenticateQuery, AuthenticateResponse, type IAuthenticateResponse, UsersClient } from '@/clients';
+import { AuthenticateQuery, type IAuthenticateQuery, type IAuthenticateResponse, UsersClient } from '@/clients';
 
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 const client = new UsersClient(baseUrl);
