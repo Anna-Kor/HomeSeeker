@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace HomeSeeker.API.Commands
 {
-    public class UsersCommandHandler : IRequestHandler<RegisterUser>
+    public class UsersCommandHandler : IRequestHandler<RegisterUserCommand>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHelper _passwordHelper;
@@ -23,7 +23,7 @@ namespace HomeSeeker.API.Commands
             _passwordHelper = passwordHelper;
         }
 
-        public async Task Handle(RegisterUser request, CancellationToken cancellationToken)
+        public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var hashedPassword = _passwordHelper.HashPassword(request.Password, out var salt);
             var user = new User { FirstName = request.FirstName, LastName = request.LastName, Role = Role.User, Username = request.Username, Password = hashedPassword, Salt = salt };

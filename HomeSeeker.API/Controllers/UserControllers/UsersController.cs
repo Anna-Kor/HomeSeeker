@@ -31,7 +31,7 @@ namespace HomeSeeker.API.Controllers.UserControllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUser model)
+        public async Task<IActionResult> Register(RegisterUserCommand model)
         {
             await _mediator.Send(model);
             return Ok();
