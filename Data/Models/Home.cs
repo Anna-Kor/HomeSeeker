@@ -18,9 +18,8 @@ namespace Data.Models
         [Column(TypeName = "decimal(15,2)")]
         public decimal Price { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(15,2)")]
-        public decimal Rent { get; set; }
+        public decimal? Rent { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(9,6)")]
