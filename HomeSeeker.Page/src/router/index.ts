@@ -18,7 +18,7 @@ router.beforeEach(async (to) => {
     const alertStore = useAlertStore();
     alertStore.clear();
 
-    const publicPages = ['/account/login', '/account/register'];
+    const publicPages = ['/', '/account/login', '/account/register'];
     const authRequired = !publicPages.includes(to.path);
     const authStore = useAuthStore();
 

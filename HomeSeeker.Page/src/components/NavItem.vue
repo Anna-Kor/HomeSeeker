@@ -7,8 +7,8 @@
 </script>
 
 <template>
-    <div v-show="authStore.user" class="q-pa-sm q-gutter-md">
-        <q-toolbar class="q-my-md">
+    <div class="q-pa-md">
+        <q-toolbar>
             <q-btn round to="/">
                <q-avatar rounded size="50px">
                    <img src="../assets/icons/magnifying-glass-front-house-icon-600w-577307164.png" />
@@ -18,6 +18,7 @@
             <q-btn flat>
                 <q-toggle :model-value="themeStore.theme"
                           @update:model-value="themeStore.changeTheme()"
+                          size="lg"
                           color="blue"
                           keep-color
                           true-value="dark-theme"
@@ -26,7 +27,8 @@
                           unchecked-icon="light_mode"
                           class="q-btn-item" />
             </q-btn>
-            <q-btn flat @click="authStore.logout()">Logout</q-btn>
+            <q-btn v-show="authStore.user" flat @click="authStore.logout()">Logout</q-btn>
+            <q-btn v-show="!authStore.user" to="/account/login" flat >Login</q-btn>
         </q-toolbar>
     </div>
 </template>

@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import AlertItemVue from '@/components/AlertItem.vue';
-import NavItemVue from '@/components/NavItem.vue';
-    import { useAuthStore } from '@/stores';
+    import AlertItemVue from '@/components/AlertItem.vue';
+    import NavItemVue from '@/components/NavItem.vue';
     import { QHeader, QLayout, QPageContainer } from 'quasar';
-
-const authStore = useAuthStore();
 </script>
 
 <template>
@@ -12,11 +9,9 @@ const authStore = useAuthStore();
         <q-header class="glossy">
             <NavItemVue />
         </q-header>
-        <q-page-container>
+        <q-page-container >
             <AlertItemVue />
-            <div class="container pt-4 pb-4">
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </q-page-container>
     </q-layout>
 </template>

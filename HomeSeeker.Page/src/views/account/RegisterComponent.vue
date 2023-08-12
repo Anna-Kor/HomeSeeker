@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
+import { QBtn, QInput, QLayout } from 'quasar';
 
-import { type IRegisterUser } from '@/clients';
+import { type IRegisterUserCommand } from '@/clients';
 import { getErrorMessage } from '@/helpers';
 import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
@@ -28,7 +29,7 @@ const schema = Yup.object().shape({
         .min(6, 'Password must be at least 6 characters')
 });
 
-const onSubmit = getSubmitFn(schema, async (values: IRegisterUser) => {
+const onSubmit = getSubmitFn(schema, async (values: IRegisterUserCommand) => {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
@@ -42,38 +43,58 @@ const onSubmit = getSubmitFn(schema, async (values: IRegisterUser) => {
 </script>
 
 <template>
-    <div class="card m-3">
-        <h4 class="card-header">Register</h4>
-        <div class="card-body">
-            <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <Field name="firstName" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
-                    <div class="invalid-feedback">{{ errors.firstName }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <Field name="lastName" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
-                    <div class="invalid-feedback">{{ errors.lastName }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                    <div class="invalid-feedback">{{ errors.username }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-                    <div class="invalid-feedback">{{ errors.password }}</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Register
-                    </button>
-                    <router-link to="login" class="btn btn-link">Cancel</router-link>
-                </div>
-            </Form>
+    <q-layout container style="height: 550px" class="shadow-2 rounded-borders">
+    <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
+        <h4 class="q-py-lg">Register</h4>
+
+        <Field class="q-py-lg" name="firstName" v-slot="{ value, field, errors }" >
+            <q-input
+            :model-value="value"
+            v-bind="field"
+            type="text"
+            label="First Name"
+            :error="!!errors[0]"
+            :error-message="errors[0]"
+            :class="{ 'is-invalid': value }"/>
+        </Field>
+
+        <Field class="q-py-lg" name="lastName" v-slot="{ value, field, errors }" >
+            <q-input
+            :model-value="value"
+            v-bind="field"
+            type="text"
+            label="Last Name"
+            :error="!!errors[0]"
+            :error-message="errors[0]"
+            :class="{ 'is-invalid': value }"/>
+        </Field>
+
+        <Field class="q-py-lg" name="username" v-slot="{ value, field, errors }" >
+            <q-input
+            :model-value="value"
+            v-bind="field"
+            type="text"
+            label="Username"
+            :error="!!errors[0]"
+            :error-message="errors[0]"
+            :class="{ 'is-invalid': value }"/>
+        </Field>
+
+        <Field class="q-py-lg" name="password" v-slot="{ value, field, errors }" >
+            <q-input
+            :model-value="value"
+            v-bind="field"
+            type="password"
+            label="Password"
+            :error="!!errors[0]"
+            :error-message="errors[0]"
+            :class="{ 'is-invalid': value }"/>
+        </Field>
+
+        <div class="q-py-lg">
+            <q-btn label="Register" type="submit" color="primary" :disabled="isSubmitting" />
+            <q-btn to="login" label="Cancel" color="primary" flat class="q-ml-sm" />
         </div>
-    </div>
+    </Form>
+    </q-layout>
 </template>
