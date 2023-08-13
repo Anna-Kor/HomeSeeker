@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Form, Field } from 'vee-validate';
+import { Form } from 'vee-validate';
 import * as Yup from 'yup';
-import { QBtn, QInput, QLayout } from 'quasar';
+import { QBtn, QLayout } from 'quasar';
+import QInputWithValidationVue from "@/components/QInputWithValidation.vue";
 
 import { type IRegisterUserCommand } from '@/clients';
 import { getErrorMessage } from '@/helpers';
@@ -47,49 +48,10 @@ const onSubmit = getSubmitFn(schema, async (values: IRegisterUserCommand) => {
     <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
         <h4 class="q-py-lg">Register</h4>
 
-        <Field class="q-py-lg" name="firstName" v-slot="{ value, field, errors }" >
-            <q-input
-            :model-value="value"
-            v-bind="field"
-            type="text"
-            label="First Name"
-            :error="!!errors[0]"
-            :error-message="errors[0]"
-            :class="{ 'is-invalid': value }"/>
-        </Field>
-
-        <Field class="q-py-lg" name="lastName" v-slot="{ value, field, errors }" >
-            <q-input
-            :model-value="value"
-            v-bind="field"
-            type="text"
-            label="Last Name"
-            :error="!!errors[0]"
-            :error-message="errors[0]"
-            :class="{ 'is-invalid': value }"/>
-        </Field>
-
-        <Field class="q-py-lg" name="username" v-slot="{ value, field, errors }" >
-            <q-input
-            :model-value="value"
-            v-bind="field"
-            type="text"
-            label="Username"
-            :error="!!errors[0]"
-            :error-message="errors[0]"
-            :class="{ 'is-invalid': value }"/>
-        </Field>
-
-        <Field class="q-py-lg" name="password" v-slot="{ value, field, errors }" >
-            <q-input
-            :model-value="value"
-            v-bind="field"
-            type="password"
-            label="Password"
-            :error="!!errors[0]"
-            :error-message="errors[0]"
-            :class="{ 'is-invalid': value }"/>
-        </Field>
+        <QInputWithValidationVue label="First name" name="firstName" type="text" />
+        <QInputWithValidationVue label="Last name" name="lastName" type="text" />
+        <QInputWithValidationVue label="Username" name="username" type="text" />
+        <QInputWithValidationVue label="Password" name="password" type="password" />
 
         <div class="q-py-lg">
             <q-btn label="Register" type="submit" color="primary" :disabled="isSubmitting" />

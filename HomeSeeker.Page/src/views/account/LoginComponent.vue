@@ -1,10 +1,11 @@
 <script setup lang="ts">
 
-import { Form, Field } from 'vee-validate';
-import { QBtn, QInput, QLayout } from 'quasar';
+import { Form } from 'vee-validate';
+import { QBtn, QLayout } from 'quasar';
+import QInputWithValidationVue from "@/components/QInputWithValidation.vue";
+
 import * as Yup from 'yup';
 import { type IAuthenticateQuery } from '@/clients';
-
 import { useAuthStore } from '@/stores';
 
 function getSubmitFn<IAuthenticateQuery extends Yup.ObjectSchema<Record<string, any>>>(
@@ -33,28 +34,9 @@ const onSubmit = getSubmitFn(schema, async (values: IAuthenticateQuery) => {
   <q-layout container style="height: 380px" class="shadow-2 rounded-borders">
   <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }" >
     <h4 class="q-py-lg">Login</h4>
-
-    <Field class="q-py-lg" name="username" v-slot="{ value, field, errors }" >  
-        <q-input
-        :model-value="value"
-        v-bind="field"
-        type="text"
-        label="Username"
-        :error="!!errors[0]"
-        :error-message="errors[0]"
-        :class="{ 'is-invalid': value }"/>
-    </Field>
-
-    <Field class="q-py-lg" name="password" v-slot="{ value, field, errors }" >
-        <q-input 
-        :model-value="value"
-        v-bind="field"
-        type="password"
-        label="Password"
-        :error="!!errors[0]"
-        :error-message="errors[0]"
-        :class="{ 'is-invalid': value }"/>
-    </Field>
+    
+    <QInputWithValidationVue label="Username" name="username" type="text" />
+    <QInputWithValidationVue label="Password" name="password" type="password" />
 
     <div class="q-py-lg">
       <q-btn label="Login" type="submit" color="primary" :disabled="isSubmitting" />
