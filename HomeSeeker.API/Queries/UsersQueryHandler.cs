@@ -44,6 +44,12 @@ namespace HomeSeeker.API.Queries
         public async Task<AuthenticateResponse> Handle(AuthenticateQuery request, CancellationToken cancellationToken)
         {
             var users = await _userRepository.GetAll(cancellationToken);
+
+            if (users == null)
+            {
+                return null;
+            }
+            
             var user = users.SingleOrDefault(x => x.Username == request.Username && _passwordHelper.VerifyPassword(request.Password, x.Password, x.Salt));
 
             if (user == null)

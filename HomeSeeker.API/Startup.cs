@@ -29,6 +29,7 @@ using NSwag.Generation.Processors.Security;
 using HomeSeeker.API.Commands.HomeCommands;
 using HomeSeeker.API.Queries.HomeQueries;
 using System.Linq;
+using HomeSeeker.API.Models.CustomResults;
 
 namespace HomeSeeker.API
 {
@@ -65,7 +66,7 @@ namespace HomeSeeker.API
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<JwtMiddleware>();
 
-            services.AddScoped<IRequestHandler<RegisterUserCommand>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<RegisterUserCommand, OperationResult>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, UsersQueryHandler>();

@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using HomeSeeker.API.Models.CustomResults;
+using MediatR;
 
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeSeeker.API.Commands.UserCommands
 {
-    public class RegisterUserCommand : IRequest
+    public class RegisterUserCommand : IRequest<OperationResult>
     {
         public string? FirstName { get; set; }
 
