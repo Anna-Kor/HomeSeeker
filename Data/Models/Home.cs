@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Data.Enums;
+
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -16,9 +18,8 @@ namespace Data.Models
         [Column(TypeName = "decimal(15,2)")]
         public decimal Price { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(15,2)")]
-        public decimal Rent { get; set; }
+        public decimal? Rent { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(9,6)")]
@@ -37,45 +38,24 @@ namespace Data.Models
         public int? LotArea { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
-
-        [ForeignKey("CategoryId")]
-        public virtual Category Categories { get; set; }
+        public virtual Category Category { get; set; }
 
         [Required]
-        public int TypeId { get; set; }
+        public virtual HomeType Type { get; set; }
 
-        [ForeignKey("TypeId")]
-        public virtual Type Types { get; set; }
+        public virtual Floor? Floor { get; set; }
 
-        public int? FloorId { get; set; }
-
-        [ForeignKey("FloorId")]
-        public virtual Floor Floors { get; set; }
-
-        public int? FloorsNumberId { get; set; }
-
-        [ForeignKey("FloorsNumberId")]
-        public virtual FloorsNumbers FloorsNumbers { get; set; }
+        public virtual FloorsQuantity? FloorsQuantity { get; set; }
 
         [Required]
-        public string Furniture { get; set; }
+        public bool HasFurniture { get; set; }
 
-        public int? RoomsNumberId { get; set; }
+        public virtual RoomsQuantity? RoomsQuantity { get; set; }
 
-        [ForeignKey("RoomsNumberId")]
-        public virtual Room Rooms { get; set; }
-
-        public int? BathroomsId { get; set; }
-
-        [ForeignKey("BathroomsId")]
-        public virtual Bathroom Bathrooms { get; set; }
+        public virtual BathroomsQuantity? BathroomsQuantity { get; set; }
 
         [Required]
-        public int StatusId { get; set; }
-
-        [ForeignKey("StatusId")]
-        public virtual Status Statuses { get; set; }
+        public HomeStatus Status { get; set; }
 
         [Required]
         public string Description { get; set; }

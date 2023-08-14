@@ -27,16 +27,13 @@
   </ItemGroup>
 
   <Target Name="NSwag" BeforeTargets="AfterBuild">
-    <Exec
-     ConsoleToMSBuild="true"
-     ContinueOnError="true"
-     Command="$(NSwagExe_Net70) run nswag.json /variables:Configuration=$(Configuration),TypescriptOutputPath=$(MSBuildThisFileDirectory)..\HomeSeeker.Page\src">
-      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net70) run nswag.json /variables:Configuration=$(Configuration),TypescriptOutputPath=$(MSBuildThisFileDirectory)..\HomeSeeker.Page\src">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
       <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
     </Exec>
 
-    <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>
-    <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>
+    <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+    <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
   </Target>
 
 </Project>

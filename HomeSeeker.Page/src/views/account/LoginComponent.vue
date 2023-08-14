@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { Form, Field } from 'vee-validate';
+
+import { Form } from 'vee-validate';
+import { QBtn, QLayout } from 'quasar';
+import QInputWithValidationVue from "@/components/QInputWithValidation.vue";
+
 import * as Yup from 'yup';
 import { type IAuthenticateQuery } from '@/clients';
-
 import { useAuthStore } from '@/stores';
 
 function getSubmitFn<IAuthenticateQuery extends Yup.ObjectSchema<Record<string, any>>>(
@@ -26,29 +29,19 @@ const onSubmit = getSubmitFn(schema, async (values: IAuthenticateQuery) => {
 });
 </script>
 
+
 <template>
-    <div class="card m-3">
-        <h4 class="card-header">Login</h4>
-        <div class="card-body">
-            <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
-                <div class="form-group">
-                    <label>Username</label>
-                    <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                    <div class="invalid-feedback">{{ errors.username }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-                    <div class="invalid-feedback">{{ errors.password }}</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Login
-                    </button>
-                    <router-link to="register" class="btn btn-link">Register</router-link>
-                </div>
-            </Form>
-        </div>
+  <q-layout container style="height: 380px" class="shadow-2 rounded-borders">
+  <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }" >
+    <h4 class="q-py-lg">Login</h4>
+    
+    <QInputWithValidationVue label="Username" name="username" type="text" />
+    <QInputWithValidationVue label="Password" name="password" type="password" />
+
+    <div class="q-py-lg">
+      <q-btn label="Login" type="submit" color="primary" :disabled="isSubmitting" />
+      <q-btn to="register" label="Register" color="primary" flat class="q-ml-sm" />
     </div>
-</template>
+  </Form>
+</q-layout>
+  </template>

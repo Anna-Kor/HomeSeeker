@@ -22,74 +22,6 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Data.Models.Bathroom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BathroomsNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bathrooms");
-                });
-
-            modelBuilder.Entity("Data.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Data.Models.Floor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FloorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Floors");
-                });
-
-            modelBuilder.Entity("Data.Models.FloorsNumbers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FloorNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FloorsNumbers");
-                });
-
             modelBuilder.Entity("Data.Models.Home", b =>
                 {
                     b.Property<int>("Id")
@@ -98,11 +30,10 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BathroomsId")
-                        .IsRequired()
+                    b.Property<int?>("BathroomsQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Category")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
@@ -113,16 +44,14 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FloorId")
-                        .IsRequired()
+                    b.Property<int?>("Floor")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FloorsNumberId")
+                    b.Property<int?>("FloorsQuantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Furniture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("HasFurniture")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Lat")
                         .HasColumnType("decimal(8,6)");
@@ -143,86 +72,21 @@ namespace Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(15,2)");
 
-                    b.Property<decimal>("Rent")
+                    b.Property<decimal?>("Rent")
                         .HasColumnType("decimal(15,2)");
 
-                    b.Property<int?>("RoomsNumberId")
+                    b.Property<int?>("RoomsQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeId")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BathroomsId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("FloorId");
-
-                    b.HasIndex("FloorsNumberId");
-
-                    b.HasIndex("RoomsNumberId");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Homes");
-                });
-
-            modelBuilder.Entity("Data.Models.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoomsNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("Data.Models.Status", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses");
-                });
-
-            modelBuilder.Entity("Data.Models.Type", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -257,61 +121,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Data.Models.Home", b =>
-                {
-                    b.HasOne("Data.Models.Bathroom", "Bathrooms")
-                        .WithMany()
-                        .HasForeignKey("BathroomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Category", "Categories")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Floor", "Floors")
-                        .WithMany()
-                        .HasForeignKey("FloorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.FloorsNumbers", "FloorsNumbers")
-                        .WithMany()
-                        .HasForeignKey("FloorsNumberId");
-
-                    b.HasOne("Data.Models.Room", "Rooms")
-                        .WithMany()
-                        .HasForeignKey("RoomsNumberId");
-
-                    b.HasOne("Data.Models.Status", "Statuses")
-                        .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Type", "Types")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bathrooms");
-
-                    b.Navigation("Categories");
-
-                    b.Navigation("Floors");
-
-                    b.Navigation("FloorsNumbers");
-
-                    b.Navigation("Rooms");
-
-                    b.Navigation("Statuses");
-
-                    b.Navigation("Types");
                 });
 #pragma warning restore 612, 618
         }

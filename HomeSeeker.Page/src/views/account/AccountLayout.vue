@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores';
 import { router } from '@/router';
+import { QPage } from 'quasar';
 
 const authStore = useAuthStore();
 if (authStore.user) {
@@ -9,11 +10,9 @@ if (authStore.user) {
 </script>
 
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 offset-sm-2 mt-5">
-                <router-view />
-            </div>
+    <q-page style="display: flex; align-items: center; justify-content: center;">
+        <div class="q-pa-md" style="flex: 0 1 400px">
+            <router-view />
         </div>
-    </div>
+    </q-page>
 </template>

@@ -26,6 +26,10 @@ using System.Reflection;
 using System.Collections.Generic;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using HomeSeeker.API.Commands.HomeCommands;
+using HomeSeeker.API.Queries.HomeQueries;
+using System.Linq;
+using HomeSeeker.API.Models.CustomResults;
 
 namespace HomeSeeker.API
 {
@@ -62,28 +66,33 @@ namespace HomeSeeker.API
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<JwtMiddleware>();
 
-            services.AddScoped<IRequestHandler<RegisterUser>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<RegisterUserCommand, OperationResult>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, UsersQueryHandler>();
             services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, UsersQueryHandler>();
 
+            services.AddScoped<IRequestHandler<AddHomeCommand>, HomesCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteHomeCommand>, HomesCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateHomeCommand>, HomesCommandHandler>();
+            services.AddScoped<IRequestHandler<GetActiveHomesQuery, List<HomeModel>>, HomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllHomesQuery, List<HomeModel>>, HomesQueryHandler>();
+
             services.AddControllers();
-            services.AddSwaggerDocument(config => {
-                config.DocumentProcessors.Add(new SecurityDefinitionAppender("Bearer",
+            services.AddOpenApiDocument(config => {
+                config.AddSecurity("JWT", Enumerable.Empty<string>(),
                     new OpenApiSecurityScheme
                     {
                         In = OpenApiSecurityApiKeyLocation.Header,
                         Description = "Please enter a valid token",
                         Name = "Authorization",
-                        Type = OpenApiSecuritySchemeType.Http,
-                        BearerFormat = "JWT",
-                        Scheme = "Bearer"
-                    }));
+                        Type = OpenApiSecuritySchemeType.ApiKey
+                    });
                 config.PostProcess = document =>
                 {
                     document.Info.Version = "v1";
                     document.Info.Title = "HomeSeeker API";
                 };
+                config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
