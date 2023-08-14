@@ -31,13 +31,13 @@ namespace HomeSeeker.API.Commands
 
             if (existingUsers != null && existingUsers.Any(user => user.Username == request.Username))
             {
-                return new OperationResultError("Username already exists.");
+                return OperationResult.FailureResult("Username already exists.");
             }
 
             var hashedPassword = _passwordHelper.HashPassword(request.Password, out var salt);
             var user = new User { FirstName = request.FirstName, LastName = request.LastName, Role = Role.User, Username = request.Username, Password = hashedPassword, Salt = salt };
             await _userRepository.Add(user);
-            return new OperationResultSuccess();
+            return OperationResult.SuccessResult();
         }
     }
 }

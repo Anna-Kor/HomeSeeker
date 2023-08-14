@@ -5,9 +5,7 @@ import { QBtn, QLayout } from 'quasar';
 import QInputWithValidationVue from "@/components/QInputWithValidation.vue";
 
 import { type IRegisterUserCommand } from '@/clients';
-import { getErrorMessage } from '@/helpers';
-import { useUsersStore, useAlertStore } from '@/stores';
-import { router } from '@/router';
+import { useUsersStore } from '@/stores';
 
 function getSubmitFn<IRegisterUser extends Yup.ObjectSchema<Record<string, any>>>(
   _: IRegisterUser,
@@ -32,14 +30,7 @@ const schema = Yup.object().shape({
 
 const onSubmit = getSubmitFn(schema, async (values: IRegisterUserCommand) => {
     const usersStore = useUsersStore();
-    const alertStore = useAlertStore();
-    try {
-        await usersStore.register(values);
-        await router.push('/account/login');
-        alertStore.success('Registration successful');
-    } catch (error) { 
-        alertStore.error(getErrorMessage(error));
-    }
+    await usersStore.register(values);
 });
 </script>
 

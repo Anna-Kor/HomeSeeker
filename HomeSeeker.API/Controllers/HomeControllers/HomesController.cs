@@ -3,6 +3,7 @@
 using HomeSeeker.API.Authorization.Attributes;
 using HomeSeeker.API.Commands.HomeCommands;
 using HomeSeeker.API.Models;
+using HomeSeeker.API.Models.CustomResults;
 using HomeSeeker.API.Queries.HomeQueries;
 
 using MediatR;
@@ -29,24 +30,40 @@ namespace HomeSeeker.API.Controllers.HomeControllers
         }
 
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var homes = await _mediator.Send(new GetAllHomesQuery());
-            return Ok(homes);
+            try
+            {
+                var homes = await _mediator.Send(new GetAllHomesQuery());
+                return Ok(homes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [AllowAnonymous]
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpGet("getActive")]
         public async Task<IActionResult> GetActive()
         {
-            var homes = await _mediator.Send(new GetActiveHomesQuery());
-            return Ok(homes);
+            try
+            {
+                var homes = await _mediator.Send(new GetActiveHomesQuery());
+                return Ok(homes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(OperationResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpPost("add")]
         public async Task<IActionResult> Add(AddHomeCommand model)
         {
@@ -56,15 +73,16 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error has occured");
+                return BadRequest(ex.Message);
             }
 
-            return StatusCode(200, "Home added successfully");
+            return Ok("Home added successfully");
         }
 
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(OperationResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status404NotFound)]
         [HttpPut("update")]
         public async Task<IActionResult> Update(UpdateHomeCommand model)
         {
@@ -74,18 +92,18 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
             catch (NullReferenceException ex)
             {
-                return StatusCode(404, "Home not found");
+                return NotFound("Home not found");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error has occured");
+                return BadRequest(ex.Message);
             }
 
-            return StatusCode(200, "Home updated successfully");
+            return Ok("Home updated successfully");
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(OperationResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(DeleteHomeCommand model)
         {
@@ -95,10 +113,10 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error has occured");
+                return BadRequest(ex.Message);
             }
 
-            return StatusCode(200, "Home deleted successfully"); ;
+            return Ok("Home deleted successfully"); ;
         }
     }
 }

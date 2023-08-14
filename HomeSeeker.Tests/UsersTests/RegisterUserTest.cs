@@ -50,8 +50,8 @@ namespace HomeSeeker.Tests.UsersTests
             var result = await handler.Handle(command, default);
 
             Assert.NotNull(result);
-            Assert.IsType<OperationResultError>(result);
-            result.Failure.Should().BeTrue();
+            Assert.IsType<OperationResult>(result);
+            result.Success.Should().BeFalse();
         }
     }
 }

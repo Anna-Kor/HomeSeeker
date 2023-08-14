@@ -2,26 +2,56 @@
 
 namespace HomeSeeker.API.Models.CustomResults
 {
-    public abstract class OperationResult
+    public class OperationResult
     {
+        protected OperationResult()
+        {
+            this.Success = true;
+        }
+        protected OperationResult(string message)
+        {
+            this.Success = false;
+            this.FailureMessage = message;
+        }
+        protected OperationResult(Exception ex)
+        {
+            this.Success = false;
+            this.Exception = ex;
+        }
         public bool Success { get; protected set; }
-
-        public bool Failure => !Success;
+        public string FailureMessage { get; protected set; }
+        public Exception Exception { get; protected set; }
+        public static OperationResult SuccessResult()
+        {
+            return new OperationResult();
+        }
+        public static OperationResult FailureResult(string message)
+        {
+            return new OperationResult(message);
+        }
+        public static OperationResult ExceptionResult(Exception ex)
+        {
+            return new OperationResult(ex);
+        }
+        public bool IsException()
+        {
+            return this.Exception != null;
+        }
     }
 
-    public abstract class OperationResult<T> : OperationResult
+    public class OperationResult<T> : OperationResult
     {
-        private T _data;
+        private T _value;
 
-        protected OperationResult(T data)
+        protected OperationResult(T value)
         {
-            Data = data;
+            Value = value;
         }
 
-        public T Data
+        public T Value
         {
-            get => Success ? _data : throw new Exception($"You can't access .{nameof(Data)} when .{nameof(Success)} is false");
-            set => _data = value;
+            get => Success ? _value : throw new Exception($"You can't access .{nameof(Value)} when .{nameof(Success)} is false");
+            set => _value = value;
         }
     }
 }
