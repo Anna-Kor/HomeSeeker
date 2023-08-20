@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { Form } from 'vee-validate';
-    import { QBtn, QLayout } from 'quasar';
+    import { QBtn } from 'quasar';
     import QInputWithValidationVue from '@/components/common/QInputWithValidation.vue';
 
     import * as Yup from 'yup';
@@ -30,17 +30,15 @@
 
 
 <template>
-  <q-layout container style="height: 380px" class="shadow-2 rounded-borders">
-  <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }" >
-    <h4 class="q-py-lg">Login</h4>
-    
-    <QInputWithValidationVue label="Username" name="username" type="text" />
-    <QInputWithValidationVue label="Password" name="password" type="password" />
+    <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
+        <h4 class="q-py-lg">Login</h4>
 
-    <div class="q-py-lg">
-      <q-btn label="Login" type="submit" color="primary" :disabled="isSubmitting" />
-      <q-btn to="register" label="Register" color="primary" flat class="q-ml-sm" />
-    </div>
-  </Form>
-</q-layout>
-  </template>
+        <QInputWithValidationVue label="Username" name="username" type="text" />
+        <QInputWithValidationVue label="Password" name="password" type="password" />
+
+        <div class="q-py-lg">
+            <q-btn label="Login" type="submit" color="primary" :disabled="isSubmitting" />
+            <q-btn to="register" label="Register" color="primary" flat class="q-ml-sm" />
+        </div>
+    </Form>
+</template>

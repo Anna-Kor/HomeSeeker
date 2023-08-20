@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { Form } from 'vee-validate';
     import * as Yup from 'yup';
-    import { QBtn, QLayout } from 'quasar';
+    import { QBtn } from 'quasar';
     import QInputWithValidationVue from '@/components/common/QInputWithValidation.vue';
 
     import { type IRegisterUserCommand } from '@/clients';
@@ -35,7 +35,6 @@
 </script>
 
 <template>
-    <q-layout container style="height: 550px" class="shadow-2 rounded-borders">
     <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
         <h4 class="q-py-lg">Register</h4>
 
@@ -49,5 +48,4 @@
             <q-btn to="login" label="Cancel" color="primary" flat class="q-ml-sm" />
         </div>
     </Form>
-    </q-layout>
 </template>

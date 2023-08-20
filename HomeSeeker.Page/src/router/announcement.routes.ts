@@ -1,9 +1,9 @@
-import AnnouncementsLayoutVue from '@/views/announcements/AnnouncementsLayout.vue';
+import FullScreenLayoutVue from '@/layouts/FullScreenLayout.vue';
 import AnnouncementsPageVue from '@/views/announcements/AnnouncementsPage.vue';
 
 export default {
     path: '/announcement',
-    component: AnnouncementsLayoutVue,
+    component: FullScreenLayoutVue,
     children: [
         { path: '', redirect: 'list' },
         { path: 'list', component: AnnouncementsPageVue }

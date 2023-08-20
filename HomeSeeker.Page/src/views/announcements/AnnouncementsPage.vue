@@ -23,6 +23,8 @@
 </script>
 
 <template>
-    <q-spinner color="white" v-if="isLoading" />
-    <AnnouncementsListVue v-else :items="homes" />
+    <div style="flex: 0 1 1000px">
+        <q-spinner color="white" v-if="isLoading" />
+        <AnnouncementsListVue v-else :items="homes" />
+    </div>
 </template>

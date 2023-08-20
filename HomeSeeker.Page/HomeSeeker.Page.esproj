@@ -19,6 +19,5 @@
     <Folder Include="src\stores\" />
     <Folder Include="src\router\" />
     <Folder Include="src\views\account\" />
-    <Folder Include="src\views\announcements\" />
   </ItemGroup>
 </Project>
