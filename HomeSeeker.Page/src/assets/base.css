@@ -1,59 +1,4 @@
-:root {
-    --vt-c-white: #ffffff;
-    --vt-c-white-soft: #f8f8f8;
-    --vt-c-white-mute: #f2f2f2;
-
-    --vt-c-black: #181818;
-    --vt-c-black-soft: #222222;
-    --vt-c-black-mute: #282828;
-
-    --vt-c-grey: #808080;
-    --vt-c-grey-soft: #736f72;
-    --vt-c-grey-mute: #d2d2cf;
-
-    --vt-c-indigo: #2c3e50;
-    
-    --vt-c-highlight-light: #e8f0fe;
-    --vt-c-highlight-dark: #2a2b30;
-
-    --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-    --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-    --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-    --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-    --vt-c-text-light-1: var(--vt-c-indigo);
-    --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-    --vt-c-text-dark-1: var(--vt-c-white);
-    --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-}
-
-:root.light-theme {
-    --color-background: var(--vt-c-white);
-    --color-background-soft: var(--vt-c-white-soft);
-    --color-background-mute: var(--vt-c-white-soft);
-
-    --color-border: var(--vt-c-divider-light-2);
-    --color-border-hover: var(--vt-c-divider-light-1);
-
-    --color-heading: var(--vt-c-text-light-1);
-    --color-text: var(--vt-c-text-light-1);
-
-    --color-highlight: var(--vt-c-highlight-light);
-}
-
-:root.dark-theme {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-
-    --color-highlight: var(--vt-c-highlight-dark);
-}
+@import url(color-palettes.css);
 
 *,
 *::before,
@@ -84,18 +29,13 @@ header {
     transition: color 0.5s, background-color 0.5s;
 }
 
-.q-field__label, .q-placeholder {
-    color: var(--color-text) !important;
-    transition: color 0.5s;
+.container {
+    background-color: var(--color-background-mute) !important;
+    transition: background-color 0.5s;
 }
 
 input:-webkit-autofill, input:focus:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 100px var(--color-highlight) inset;
     -webkit-text-fill-color: var(--color-text) !important;
     transition: -webkit-text-fill-color 0.5s, -webkit-box-shadow 0.5s;
-}
-
-form {
-    background-color: var(--color-background-mute) !important;
-    transition: background-color 0.5s;
 }

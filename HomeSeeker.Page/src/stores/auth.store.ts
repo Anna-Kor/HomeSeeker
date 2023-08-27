@@ -9,7 +9,8 @@ const baseUrl = `${import.meta.env.VITE_API_URL}`;
 const client = new UsersClient(baseUrl);
 
 interface IUserState {
-    user: IAuthenticateResponse | null
+    user: IAuthenticateResponse | null,
+    returnUrl: string | null
 }
 
 export const useAuthStore = defineStore({
@@ -17,7 +18,8 @@ export const useAuthStore = defineStore({
     state: (): IUserState => {
         const storedUser = localStorage.getItem('user');
         return {
-            user: typeof(storedUser) === 'string' ? JSON.parse(storedUser) : null
+            user: typeof (storedUser) === 'string' ? JSON.parse(storedUser) : null,
+            returnUrl: null
         }
     },
     actions: {
@@ -29,7 +31,7 @@ export const useAuthStore = defineStore({
 
                 localStorage.setItem('user', JSON.stringify(user));
 
-                router.push('/announcement/list');
+                router.push(this.returnUrl || '/announcement/list');
             } catch (error) {
                 const alertStore = useAlertStore();
                 alertStore.error(getErrorMessage(error));

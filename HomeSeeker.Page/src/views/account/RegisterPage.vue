@@ -35,7 +35,7 @@
 </script>
 
 <template>
-    <Form class="q-pa-lg" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
+    <Form class="q-pa-lg rounded-borders" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
         <h4 class="q-py-lg">Register</h4>
 
         <QInputWithValidationVue label="First name" name="firstName" type="text" />

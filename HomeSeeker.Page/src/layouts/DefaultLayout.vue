@@ -6,7 +6,7 @@
 
 <template>
     <q-layout>
-        <q-header class="glossy">
+        <q-header reveal class="glossy">
             <NavItemVue />
         </q-header>
         <q-page-container>

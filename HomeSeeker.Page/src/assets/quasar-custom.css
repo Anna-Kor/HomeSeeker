@@ -1,0 +1,25 @@
+@import url(color-palettes.css);
+
+.q-img__content.absolute-bottom.q-item.q-item__section.q-item__section--side {
+    color: var(--vt-c-white) !important;
+}
+
+.q-field__label, .q-placeholder, .q-item__section--side:not(.q-img__content.absolute-bottom.q-item.q-item__section.q-item__section--side) {
+    color: var(--color-text) !important;
+    transition: color 0.5s;
+}
+
+.q-spinner {
+    color: var(--color-secondary) !important;
+    transition: color 0.5s;
+}
+
+.q-separator {
+    background: var(--color-secondary) !important;
+    transition: background 0.5s;
+}
+
+.q-item__label--caption {
+    color: var(--color-caption) !important;
+    transition: color 0.5s;
+}

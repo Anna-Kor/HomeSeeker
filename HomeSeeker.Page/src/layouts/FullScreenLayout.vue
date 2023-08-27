@@ -5,7 +5,7 @@
 
 <template>
     <DefaultLayoutVue>
-        <q-page style="display: flex; align-items: center; justify-content: center;">
+        <q-page style="display: flex; justify-content: center;">
             <router-view />
         </q-page>
     </DefaultLayoutVue>

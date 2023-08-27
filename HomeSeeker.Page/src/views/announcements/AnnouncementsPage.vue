@@ -13,18 +13,19 @@
         isLoading.value = true;
         const baseUrl = `${import.meta.env.VITE_API_URL}`;
         const client = new HomesClient(baseUrl);
-        client.getActive().then(response => homes.value = response);
+        client.getActive().then((response) => {
+            homes.value = response;
+            isLoading.value = false;
+        });
     } catch (error) {
         const alertStore = useAlertStore();
         alertStore.error(getErrorMessage(error));
-    } finally {
-        isLoading.value = false;
     }
 </script>
 
 <template>
     <div style="flex: 0 1 1000px">
-        <q-spinner color="white" v-if="isLoading" />
+        <q-spinner class="fixed-center" color="white" size="4em" v-if="isLoading" />
         <AnnouncementsListVue v-else :items="homes" />
     </div>
 </template>

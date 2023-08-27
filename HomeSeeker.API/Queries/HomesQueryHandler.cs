@@ -12,7 +12,8 @@ namespace HomeSeeker.API.Queries
 {
     public class HomesQueryHandler :
         IRequestHandler<GetAllHomesQuery, List<HomeModel>>,
-        IRequestHandler<GetActiveHomesQuery, List<HomeModel>>
+        IRequestHandler<GetActiveHomesQuery, List<HomeModel>>,
+        IRequestHandler<GetHomeByIdQuery, HomeModel>
     {
         private readonly IHomeRepository _homeRepository;
 
@@ -30,6 +31,12 @@ namespace HomeSeeker.API.Queries
         public async Task<List<HomeModel>> Handle(GetActiveHomesQuery request, CancellationToken cancellationToken)
         {
             var homes = await _homeRepository.GetActive(cancellationToken);
+            return homes;
+        }
+
+        public async Task<HomeModel> Handle(GetHomeByIdQuery request, CancellationToken cancellationToken)
+        {
+            var homes = await _homeRepository.GetById(request.Id, cancellationToken);
             return homes;
         }
     }
