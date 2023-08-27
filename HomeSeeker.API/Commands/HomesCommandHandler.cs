@@ -41,7 +41,8 @@ namespace HomeSeeker.API.Commands
                 RoomsQuantity = request.RoomsQuantity,
                 BathroomsQuantity = request.BathroomsQuantity,
                 Status = HomeStatus.Available,
-                Description = request.Description
+                Description = request.Description,
+                CreatedUserId = request.CreatedUserId
             };
             await _homeRepository.Add(home);
         }

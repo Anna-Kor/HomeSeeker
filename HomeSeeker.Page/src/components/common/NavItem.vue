@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import { useAuthStore, useThemeStore } from '@/stores';
     import { storeToRefs } from 'pinia';
-    import { QAvatar, QBtn, QToggle, QToolbar, QSpace } from 'quasar';
+    import MenuItemVue from '@/components/common/MenuItem.vue';
+    import { QAvatar, QBtn, QItem, QItemSection, QList, QMenu, QToggle, QToolbar, QSeparator, QSpace } from 'quasar';
 
     const authStore = useAuthStore();
     const { user } = storeToRefs(authStore);
@@ -30,8 +31,9 @@
                     false-value="light-theme"
                     checked-icon="dark_mode"
                     unchecked-icon="light_mode"/>
-            <q-btn v-if="user" flat @click="authStore.logout()">Logout</q-btn>
-            <q-btn v-else to="/account/login" flat >Login</q-btn>
-        </q-toolbar>
+            <q-btn round icon="menu">
+                <MenuItemVue />
+            </q-btn>
+         </q-toolbar>
     </div>
 </template>

@@ -37,5 +37,7 @@ namespace HomeSeeker.API.Commands.HomeCommands
         public BathroomsQuantity? BathroomsQuantity { get; set; }
 
         public string Description { get; set; }
+
+        public int CreatedUserId { get; set; }
     }
 }

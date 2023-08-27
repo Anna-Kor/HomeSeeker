@@ -79,6 +79,23 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
         }
 
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [HttpGet("getByUserId")]
+        public async Task<IActionResult> GetByUserId(int id)
+        {
+            try
+            {
+                var home = await _mediator.Send(new GetHomesByUserIdQuery(id));
+                return Ok(home);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [ProducesResponseType(typeof(OperationResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpPost("add")]

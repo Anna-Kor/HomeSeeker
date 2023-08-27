@@ -126,6 +126,40 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
             }
         }
 
+        public async Task<List<HomeModel>> GetByUserId(int userId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                List<Home> homeEntities = await _dbContext.Homes.Where(x => x.CreatedUserId == userId).ToListAsync(cancellationToken);
+                List<HomeModel> homes = homeEntities.Select(home => new HomeModel
+                {
+                    Id = home.Id,
+                    Name = home.Name,
+                    Price = home.Price,
+                    Rent = home.Rent,
+                    Lon = home.Lon,
+                    Lat = home.Lat,
+                    City = home.City,
+                    LivingArea = home.LivingArea,
+                    LotArea = home.LotArea,
+                    Category = home.Category,
+                    Type = home.Type,
+                    Floor = home.Floor,
+                    FloorsQuantity = home.FloorsQuantity,
+                    HasFurniture = home.HasFurniture,
+                    RoomsQuantity = home.RoomsQuantity,
+                    BathroomsQuantity = home.BathroomsQuantity,
+                    Status = home.Status,
+                    Description = home.Description
+                }).ToList();
+                return homes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task Add(Home home)
         {
             try

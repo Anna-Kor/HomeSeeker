@@ -77,6 +77,7 @@ namespace HomeSeeker.API
             services.AddScoped<IRequestHandler<GetActiveHomesQuery, List<HomeModel>>, HomesQueryHandler>();
             services.AddScoped<IRequestHandler<GetAllHomesQuery, List<HomeModel>>, HomesQueryHandler>();
             services.AddScoped<IRequestHandler<GetHomeByIdQuery, HomeModel>, HomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>, HomesQueryHandler>();
 
             services.AddControllers();
             services.AddOpenApiDocument(config => {
