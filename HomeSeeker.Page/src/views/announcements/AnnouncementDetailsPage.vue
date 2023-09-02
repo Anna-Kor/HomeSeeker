@@ -1,13 +1,17 @@
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { storeToRefs } from 'pinia';
     import { getErrorMessage } from '@/helpers';
-    import { useAlertStore } from '@/stores';
+    import { useAlertStore, useAuthStore } from '@/stores';
     import { type IHomeModel, HomesClient, Category } from '@/clients';
     import { QImg, QItem, QItemLabel, QItemSection, QSeparator, QSpinner } from 'quasar';
 
     const props = defineProps<{
         id: Number,
     }>();
+
+    const authStore = useAuthStore();
+    const { user } = storeToRefs(authStore);
 
     const isLoading = ref(true);
     let home = ref(undefined as IHomeModel | undefined);
@@ -16,6 +20,7 @@
         isLoading.value = true;
         const baseUrl = `${import.meta.env.VITE_API_URL}`;
         const client = new HomesClient(baseUrl);
+        client.setAuthToken(user.value?.token || undefined);
         client.getById(Number(props.id)).then((response) => {
             home.value = response;
             isLoading.value = false;

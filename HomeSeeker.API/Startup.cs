@@ -30,6 +30,7 @@ using HomeSeeker.API.Commands.HomeCommands;
 using HomeSeeker.API.Queries.HomeQueries;
 using System.Linq;
 using HomeSeeker.API.Models.CustomResults;
+using Microsoft.AspNetCore.Http;
 
 namespace HomeSeeker.API
 {
@@ -80,6 +81,7 @@ namespace HomeSeeker.API
             services.AddScoped<IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>, HomesQueryHandler>();
 
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddOpenApiDocument(config => {
                 config.AddSecurity("JWT", Enumerable.Empty<string>(),
                     new OpenApiSecurityScheme

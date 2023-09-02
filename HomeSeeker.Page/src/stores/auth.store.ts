@@ -26,11 +26,8 @@ export const useAuthStore = defineStore({
         async login(username: string, password: string) {
             try {
                 const user = await client.authenticate(new AuthenticateQuery({ username, password } as IAuthenticateQuery));
-
                 this.user = user;
-
                 localStorage.setItem('user', JSON.stringify(user));
-
                 router.push(this.returnUrl || '/announcement/list');
             } catch (error) {
                 const alertStore = useAlertStore();

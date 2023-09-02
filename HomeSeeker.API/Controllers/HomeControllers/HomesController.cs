@@ -23,10 +23,12 @@ namespace HomeSeeker.API.Controllers.HomeControllers
     public class HomesController : ControllerBase
     {
         private readonly ISender _mediator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HomesController(ISender mediator)
+        public HomesController(ISender mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
@@ -62,7 +64,6 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
         }
 
-        [AllowAnonymous]
         [ProducesResponseType(typeof(HomeModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpGet("getById")]
@@ -79,15 +80,15 @@ namespace HomeSeeker.API.Controllers.HomeControllers
             }
         }
 
-        [AllowAnonymous]
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
-        [HttpGet("getByUserId")]
-        public async Task<IActionResult> GetByUserId(int id)
+        [HttpGet("getByUser")]
+        public async Task<IActionResult> GetByUser()
         {
             try
             {
-                var home = await _mediator.Send(new GetHomesByUserIdQuery(id));
+                var user = (UserModel)_httpContextAccessor.HttpContext.Items["User"];
+                var home = await _mediator.Send(new GetHomesByUserIdQuery(user.Id));
                 return Ok(home);
             }
             catch (Exception ex)

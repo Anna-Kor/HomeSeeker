@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useAuthStore, useThemeStore } from '@/stores';
+    import { useAuthStore } from '@/stores';
     import { storeToRefs } from 'pinia';
     import { QItem, QItemSection, QList, QMenu, QSeparator } from 'quasar';
 
