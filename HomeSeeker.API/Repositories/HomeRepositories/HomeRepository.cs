@@ -28,27 +28,7 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
             try
             {
                 List<Home> homeEntities = await _dbContext.Homes.ToListAsync(cancellationToken);
-                List<HomeModel> homes = homeEntities.Select(home => new HomeModel
-                {
-                    Id = home.Id,
-                    Name = home.Name,
-                    Price = home.Price,
-                    Rent = home.Rent,
-                    Lon = home.Lon,
-                    Lat = home.Lat,
-                    City = home.City,
-                    LivingArea = home.LivingArea,
-                    LotArea = home.LotArea,
-                    Category = home.Category,
-                    Type = home.Type,
-                    Floor = home.Floor,
-                    FloorsQuantity = home.FloorsQuantity,
-                    HasFurniture = home.HasFurniture,
-                    RoomsQuantity = home.RoomsQuantity,
-                    BathroomsQuantity = home.BathroomsQuantity,
-                    Status = home.Status,
-                    Description = home.Description
-                }).ToList();
+                List<HomeModel> homes = homeEntities.Select(home => new HomeModel(home)).ToList();
 
                 return homes;
             }
@@ -97,27 +77,7 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
             try
             {
                 Home homeEntity = await _dbContext.Homes.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
-                HomeModel home = new HomeModel
-                {
-                    Id = homeEntity.Id,
-                    Name = homeEntity.Name,
-                    Price = homeEntity.Price,
-                    Rent = homeEntity.Rent,
-                    Lon = homeEntity.Lon,
-                    Lat = homeEntity.Lat,
-                    City = homeEntity.City,
-                    LivingArea = homeEntity.LivingArea,
-                    LotArea = homeEntity.LotArea,
-                    Category = homeEntity.Category,
-                    Type = homeEntity.Type,
-                    Floor = homeEntity.Floor,
-                    FloorsQuantity = homeEntity.FloorsQuantity,
-                    HasFurniture = homeEntity.HasFurniture,
-                    RoomsQuantity = homeEntity.RoomsQuantity,
-                    BathroomsQuantity = homeEntity.BathroomsQuantity,
-                    Status = homeEntity.Status,
-                    Description = homeEntity.Description
-                };
+                HomeModel home = new HomeModel(homeEntity);
                 return home;
             }
             catch (Exception ex)
@@ -131,27 +91,7 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
             try
             {
                 List<Home> homeEntities = await _dbContext.Homes.Where(x => x.CreatedUserId == userId).ToListAsync(cancellationToken);
-                List<HomeModel> homes = homeEntities.Select(home => new HomeModel
-                {
-                    Id = home.Id,
-                    Name = home.Name,
-                    Price = home.Price,
-                    Rent = home.Rent,
-                    Lon = home.Lon,
-                    Lat = home.Lat,
-                    City = home.City,
-                    LivingArea = home.LivingArea,
-                    LotArea = home.LotArea,
-                    Category = home.Category,
-                    Type = home.Type,
-                    Floor = home.Floor,
-                    FloorsQuantity = home.FloorsQuantity,
-                    HasFurniture = home.HasFurniture,
-                    RoomsQuantity = home.RoomsQuantity,
-                    BathroomsQuantity = home.BathroomsQuantity,
-                    Status = home.Status,
-                    Description = home.Description
-                }).ToList();
+                List<HomeModel> homes = homeEntities.Select(home => new HomeModel(home)).ToList();
                 return homes;
             }
             catch (Exception ex)
