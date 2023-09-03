@@ -2,7 +2,7 @@
 using Data.Models;
 
 using HomeSeeker.API.Commands.HomeCommands;
-using HomeSeeker.API.Repositories.HomeRepositories;
+using HomeSeeker.API.Repositories;
 
 using MediatR;
 using System.Threading;
@@ -15,11 +15,11 @@ namespace HomeSeeker.API.Commands
         IRequestHandler<DeleteHomeCommand>,
         IRequestHandler<UpdateHomeCommand>
     {
-        private readonly IHomeRepository _homeRepository;
+        private readonly IEntityOperationsRepositoryBase<Home> _homeOperationsRepository;
 
-        public HomesCommandHandler(IHomeRepository homeRepository)
+        public HomesCommandHandler(IEntityOperationsRepositoryBase<Home> homeOperationsRepository)
         {
-            _homeRepository = homeRepository;
+            _homeOperationsRepository = homeOperationsRepository;
         }
 
         public async Task Handle(AddHomeCommand request, CancellationToken cancellationToken)
@@ -44,12 +44,12 @@ namespace HomeSeeker.API.Commands
                 Description = request.Description,
                 CreatedUserId = request.CreatedUserId
             };
-            await _homeRepository.Add(home);
+            await _homeOperationsRepository.Add(home);
         }
 
         public async Task Handle(DeleteHomeCommand request, CancellationToken cancellationToken)
         {
-            await _homeRepository.Delete(request.Id);
+            await _homeOperationsRepository.Delete(request.Id);
         }
 
         public async Task Handle(UpdateHomeCommand request, CancellationToken cancellationToken)
@@ -75,7 +75,7 @@ namespace HomeSeeker.API.Commands
                 Description = request.Description
             };
 
-            await _homeRepository.Update(home);
+            await _homeOperationsRepository.Update(home);
         }
     }
 }

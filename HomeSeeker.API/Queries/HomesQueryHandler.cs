@@ -14,11 +14,12 @@ namespace HomeSeeker.API.Queries
         IRequestHandler<GetAllHomesQuery, List<HomeModel>>,
         IRequestHandler<GetActiveHomesQuery, List<HomeModel>>,
         IRequestHandler<GetHomeByIdQuery, HomeModel>,
-        IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>
+        IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>,
+        IRequestHandler<GetMaxPriceQuery, decimal>
     {
-        private readonly IHomeRepository _homeRepository;
+        private readonly IGetHomeRepository _homeRepository;
 
-        public HomesQueryHandler(IHomeRepository homeRepository)
+        public HomesQueryHandler(IGetHomeRepository homeRepository)
         {
             _homeRepository = homeRepository;
         }
@@ -31,7 +32,7 @@ namespace HomeSeeker.API.Queries
 
         public async Task<List<HomeModel>> Handle(GetActiveHomesQuery request, CancellationToken cancellationToken)
         {
-            var homes = await _homeRepository.GetActive(cancellationToken);
+            var homes = await _homeRepository.GetActive(request.FilterValues, cancellationToken);
             return homes;
         }
 
@@ -45,6 +46,12 @@ namespace HomeSeeker.API.Queries
         {
             var homes = await _homeRepository.GetByUserId(request.UserId, cancellationToken);
             return homes;
+        }
+
+        public async Task<decimal> Handle(GetMaxPriceQuery request, CancellationToken cancellationToken)
+        {
+            var maxPrice = await _homeRepository.GetMaxPrice(cancellationToken);
+            return maxPrice;
         }
     }
 }

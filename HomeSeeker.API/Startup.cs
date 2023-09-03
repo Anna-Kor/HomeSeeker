@@ -31,6 +31,8 @@ using HomeSeeker.API.Queries.HomeQueries;
 using System.Linq;
 using HomeSeeker.API.Models.CustomResults;
 using Microsoft.AspNetCore.Http;
+using HomeSeeker.API.Repositories;
+using Data.Models;
 
 namespace HomeSeeker.API
 {
@@ -61,8 +63,10 @@ namespace HomeSeeker.API
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddScoped<IHomeRepository, HomeRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGetHomeRepository, GetHomeRepository>();
+            services.AddScoped<IGetRepositoryBase<UserModel>, GetUserRepository>();
+            services.AddScoped<IEntityOperationsRepositoryBase<User>, UserOperationsRepository>();
+            services.AddScoped<IEntityOperationsRepositoryBase<Home>, HomeOperationsRepository>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<JwtMiddleware>();
@@ -76,6 +80,7 @@ namespace HomeSeeker.API
             services.AddScoped<IRequestHandler<DeleteHomeCommand>, HomesCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateHomeCommand>, HomesCommandHandler>();
             services.AddScoped<IRequestHandler<GetActiveHomesQuery, List<HomeModel>>, HomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetMaxPriceQuery, decimal>, HomesQueryHandler>();
             services.AddScoped<IRequestHandler<GetAllHomesQuery, List<HomeModel>>, HomesQueryHandler>();
             services.AddScoped<IRequestHandler<GetHomeByIdQuery, HomeModel>, HomesQueryHandler>();
             services.AddScoped<IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>, HomesQueryHandler>();

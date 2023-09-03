@@ -29,7 +29,7 @@ export const useAuthStore = defineStore({
                 this.user = user;
                 localStorage.setItem('user', JSON.stringify(user));
                 router.push(this.returnUrl || '/announcement/list');
-            } catch (error) {
+            } catch (error) { 
                 const alertStore = useAlertStore();
                 alertStore.error(getErrorMessage(error));
             }

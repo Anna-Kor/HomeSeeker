@@ -51,11 +51,11 @@ namespace HomeSeeker.API.Controllers.HomeControllers
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpGet("getActive")]
-        public async Task<IActionResult> GetActive()
+        public async Task<IActionResult> GetActive([FromQuery] GetActiveHomesQuery query)
         {
             try
             {
-                var homes = await _mediator.Send(new GetActiveHomesQuery());
+                var homes = await _mediator.Send(query);
                 return Ok(homes);
             }
             catch (Exception ex)
@@ -90,6 +90,23 @@ namespace HomeSeeker.API.Controllers.HomeControllers
                 var user = (UserModel)_httpContextAccessor.HttpContext.Items["User"];
                 var home = await _mediator.Send(new GetHomesByUserIdQuery(user.Id));
                 return Ok(home);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [HttpGet("getMaxPrice")]
+        public async Task<IActionResult> GetMaxPrice()
+        {
+            try
+            {
+                var maxPrice = await _mediator.Send(new GetMaxPriceQuery());
+                return Ok(maxPrice);
             }
             catch (Exception ex)
             {
