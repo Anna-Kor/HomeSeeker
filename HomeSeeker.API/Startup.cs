@@ -113,7 +113,7 @@ namespace HomeSeeker.API
             });
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
-            services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
+            services.AddDbContext<IDbContext, HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
