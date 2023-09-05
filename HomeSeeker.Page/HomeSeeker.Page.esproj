@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.83-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.83-alpha">
   <PropertyGroup>
     <StartupCommand>npm run dev</StartupCommand>
     <JavaScriptTestRoot>.\</JavaScriptTestRoot>
@@ -17,6 +17,6 @@
     <Folder Include="src\helpers\" />
     <Folder Include="src\stores\" />
     <Folder Include="src\router\" />
-    <Folder Include="src\views\" />
+    <Folder Include="src\views\account\" />
   </ItemGroup>
 </Project>

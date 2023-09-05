@@ -8,15 +8,26 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 
 using Data;
+using Data.Models;
 
 using HomeSeeker.API.Authorization.Utils;
 using HomeSeeker.API.Authorization;
 using HomeSeeker.API.Authorization.Helpers;
-using HomeSeeker.API.Commands;
-using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Commands.HomeCommands.AddHome;
+using HomeSeeker.API.Commands.HomeCommands.DeleteHome;
+using HomeSeeker.API.Commands.HomeCommands.UpdateHome;
+using HomeSeeker.API.Commands.UserCommands.RegisterUser;
 using HomeSeeker.API.Models;
-using HomeSeeker.API.Queries;
-using HomeSeeker.API.Queries.UserQueries;
+using HomeSeeker.API.Models.CustomResults;
+using HomeSeeker.API.Queries.HomeQueries.GetActiveHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetAllHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetHomeById;
+using HomeSeeker.API.Queries.HomeQueries.GetHomesByUserId;
+using HomeSeeker.API.Queries.HomeQueries.GetMaxPrice;
+using HomeSeeker.API.Queries.UserQueries.GetUserById;
+using HomeSeeker.API.Queries.UserQueries.Authenticate;
+using HomeSeeker.API.Queries.UserQueries.GetAllUsers;
+using HomeSeeker.API.Repositories;
 using HomeSeeker.API.Repositories.HomeRepositories;
 using HomeSeeker.API.Repositories.UserRepositories;
 
@@ -24,12 +35,10 @@ using MediatR;
 
 using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
+
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using HomeSeeker.API.Commands.HomeCommands;
-using HomeSeeker.API.Queries.HomeQueries;
-using System.Linq;
-using HomeSeeker.API.Models.CustomResults;
 
 namespace HomeSeeker.API
 {
@@ -60,24 +69,32 @@ namespace HomeSeeker.API
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddScoped<IHomeRepository, HomeRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGetHomeRepository, GetHomeRepository>();
+            services.AddScoped<IGetRepositoryBase<UserModel>, GetUserRepository>();
+            services.AddScoped<IEntityOperationsRepositoryBase<User>, UserOperationsRepository>();
+            services.AddScoped<IEntityOperationsRepositoryBase<Home>, HomeOperationsRepository>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<JwtMiddleware>();
 
-            services.AddScoped<IRequestHandler<RegisterUserCommand, OperationResult>, UsersCommandHandler>();
-            services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, UsersQueryHandler>();
-            services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, UsersQueryHandler>();
-            services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, UsersQueryHandler>();
+            services.AddScoped<IRequestHandler<RegisterUserCommand, OperationResult>, RegisterUserCommandHandler>();
 
-            services.AddScoped<IRequestHandler<AddHomeCommand>, HomesCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteHomeCommand>, HomesCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateHomeCommand>, HomesCommandHandler>();
-            services.AddScoped<IRequestHandler<GetActiveHomesQuery, List<HomeModel>>, HomesQueryHandler>();
-            services.AddScoped<IRequestHandler<GetAllHomesQuery, List<HomeModel>>, HomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllUsersQuery, List<UserModel>>, GetAllUsersQueryHandler>();
+            services.AddScoped<IRequestHandler<GetUserByIdQuery, UserModel>, GetUserByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<AuthenticateQuery, AuthenticateResponse>, AuthenticateQueryHandler>();
+
+            services.AddScoped<IRequestHandler<AddHomeCommand>, AddHomeCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteHomeCommand>, DeleteHomeCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateHomeCommand>, UpdateHomeCommandHandler>();
+
+            services.AddScoped<IRequestHandler<GetActiveHomesQuery, List<HomeModel>>, GetActiveHomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetMaxPriceQuery, decimal>, GetMaxPriceQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllHomesQuery, List<HomeModel>>, GetAllHomesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetHomeByIdQuery, HomeModel>, GetHomeByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<GetHomesByUserIdQuery, List<HomeModel>>, GetHomesByUserIdQueryHandler>();
 
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddOpenApiDocument(config => {
                 config.AddSecurity("JWT", Enumerable.Empty<string>(),
                     new OpenApiSecurityScheme
@@ -96,7 +113,7 @@ namespace HomeSeeker.API
             });
 
             var connectionString = Configuration.GetConnectionString("HomeSeekerDBConnection");
-            services.AddDbContext<HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
+            services.AddDbContext<IDbContext, HomeSeekerDBContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("Data")));
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

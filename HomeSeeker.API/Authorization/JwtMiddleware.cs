@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using HomeSeeker.API.Authorization.Utils;
-using HomeSeeker.API.Queries.UserQueries;
+using HomeSeeker.API.Queries.UserQueries.GetUserById;
 
 using MediatR;
 

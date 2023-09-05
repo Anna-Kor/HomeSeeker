@@ -1,11 +1,12 @@
-﻿using FluentAssertions;
+﻿using Data.Models;
+
+using FluentAssertions;
 
 using HomeSeeker.API.Authorization.Helpers;
-using HomeSeeker.API.Commands;
-using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Commands.UserCommands.RegisterUser;
 using HomeSeeker.API.Models;
 using HomeSeeker.API.Models.CustomResults;
-using HomeSeeker.API.Repositories.UserRepositories;
+using HomeSeeker.API.Repositories;
 
 using NSubstitute;
 
@@ -19,12 +20,14 @@ namespace HomeSeeker.Tests.UsersTests
                 new object[] { new RegisterUserCommand("name", "lastName", "user1", "password") }
            };
 
-        private readonly IUserRepository _userRepositoryMock;
+        private readonly IGetRepositoryBase<UserModel> _getUserRepositoryMock;
+        private readonly IEntityOperationsRepositoryBase<User> _userOperationsRepositoryMock;
         private readonly IPasswordHelper _passwordHelperMock;
 
         public RegisterUserTest()
         {
-            _userRepositoryMock = Substitute.For<IUserRepository>();
+            _getUserRepositoryMock = Substitute.For<IGetRepositoryBase<UserModel>>();
+            _userOperationsRepositoryMock = Substitute.For<IEntityOperationsRepositoryBase<User>>();
             _passwordHelperMock = Substitute.For<IPasswordHelper>();
         }
 
@@ -32,7 +35,7 @@ namespace HomeSeeker.Tests.UsersTests
         [MemberData(nameof(Data))]
         public async void RegisterUser_WhereDataAreCorrect_ShouldReturnOk(RegisterUserCommand command)
         {
-            var handler = new UsersCommandHandler(_userRepositoryMock, _passwordHelperMock);
+            var handler = new RegisterUserCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
 
             var result = await handler.Handle(command, default);
 
@@ -44,8 +47,8 @@ namespace HomeSeeker.Tests.UsersTests
         [MemberData(nameof(Data))]
         public async void RegisterUser_WhereUsernameExists_ShouldReturnError(RegisterUserCommand command)
         {
-            _userRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = command.Username } });
-            var handler = new UsersCommandHandler(_userRepositoryMock, _passwordHelperMock);
+            _getUserRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = command.Username } });
+            var handler = new RegisterUserCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
 
             var result = await handler.Handle(command, default);
 

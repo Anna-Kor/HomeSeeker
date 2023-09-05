@@ -59,5 +59,8 @@ namespace Data.Models
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        public int CreatedUserId { get; set; }
     }
 }

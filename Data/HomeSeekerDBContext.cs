@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    public class HomeSeekerDBContext : DbContext
+    public class HomeSeekerDBContext : DbContext, IDbContext
     {
         public HomeSeekerDBContext(DbContextOptions<HomeSeekerDBContext> options):base(options)
         {

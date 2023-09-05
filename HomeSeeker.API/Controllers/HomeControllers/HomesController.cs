@@ -1,10 +1,16 @@
 ﻿using Data.Enums;
 
 using HomeSeeker.API.Authorization.Attributes;
-using HomeSeeker.API.Commands.HomeCommands;
+using HomeSeeker.API.Commands.HomeCommands.AddHome;
+using HomeSeeker.API.Commands.HomeCommands.DeleteHome;
+using HomeSeeker.API.Commands.HomeCommands.UpdateHome;
 using HomeSeeker.API.Models;
 using HomeSeeker.API.Models.CustomResults;
-using HomeSeeker.API.Queries.HomeQueries;
+using HomeSeeker.API.Queries.HomeQueries.GetActiveHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetAllHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetHomeById;
+using HomeSeeker.API.Queries.HomeQueries.GetHomesByUserId;
+using HomeSeeker.API.Queries.HomeQueries.GetMaxPrice;
 
 using MediatR;
 
@@ -23,10 +29,12 @@ namespace HomeSeeker.API.Controllers.HomeControllers
     public class HomesController : ControllerBase
     {
         private readonly ISender _mediator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HomesController(ISender mediator)
+        public HomesController(ISender mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
@@ -49,12 +57,62 @@ namespace HomeSeeker.API.Controllers.HomeControllers
         [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
         [HttpGet("getActive")]
-        public async Task<IActionResult> GetActive()
+        public async Task<IActionResult> GetActive([FromQuery] GetActiveHomesQuery query)
         {
             try
             {
-                var homes = await _mediator.Send(new GetActiveHomesQuery());
+                var homes = await _mediator.Send(query);
                 return Ok(homes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(typeof(HomeModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var home = await _mediator.Send(new GetHomeByIdQuery(id));
+                return Ok(home);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(typeof(List<HomeModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [HttpGet("getByUser")]
+        public async Task<IActionResult> GetByUser()
+        {
+            try
+            {
+                var user = (UserModel)_httpContextAccessor.HttpContext.Items["User"];
+                var home = await _mediator.Send(new GetHomesByUserIdQuery(user.Id));
+                return Ok(home);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ObjectResult), StatusCodes.Status400BadRequest)]
+        [HttpGet("getMaxPrice")]
+        public async Task<IActionResult> GetMaxPrice()
+        {
+            try
+            {
+                var maxPrice = await _mediator.Send(new GetMaxPriceQuery());
+                return Ok(maxPrice);
             }
             catch (Exception ex)
             {

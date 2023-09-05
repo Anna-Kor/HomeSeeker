@@ -18,21 +18,18 @@ export const useAuthStore = defineStore({
     state: (): IUserState => {
         const storedUser = localStorage.getItem('user');
         return {
-            user: typeof(storedUser) === 'string' ? JSON.parse(storedUser) : null,
-            returnUrl: null,
+            user: typeof (storedUser) === 'string' ? JSON.parse(storedUser) : null,
+            returnUrl: null
         }
     },
     actions: {
         async login(username: string, password: string) {
             try {
-                const user = (await client.authenticate(new AuthenticateQuery({ username, password } as IAuthenticateQuery)));
-
+                const user = await client.authenticate(new AuthenticateQuery({ username, password } as IAuthenticateQuery));
                 this.user = user;
-
                 localStorage.setItem('user', JSON.stringify(user));
-
-                router.push(this.returnUrl || '/');
-            } catch (error) {
+                router.push(this.returnUrl || '/announcement/list');
+            } catch (error) { 
                 const alertStore = useAlertStore();
                 alertStore.error(getErrorMessage(error));
             }
@@ -40,7 +37,7 @@ export const useAuthStore = defineStore({
         logout() {
             this.user = null;
             localStorage.removeItem('user');
-            router.push('/');
+            router.push('/announcement/list');
         }
     }
 });

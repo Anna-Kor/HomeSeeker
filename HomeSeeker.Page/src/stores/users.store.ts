@@ -9,10 +9,6 @@ const client = new UsersClient(baseUrl);
 
 export const useUsersStore = defineStore({
     id: 'users',
-    state: () => ({
-        users: {},
-        user: {}
-    }),
     actions: {
         async register(user: IRegisterUserCommand) {
             const alertStore = useAlertStore();
