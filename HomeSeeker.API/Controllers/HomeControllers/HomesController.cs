@@ -1,10 +1,16 @@
 ﻿using Data.Enums;
 
 using HomeSeeker.API.Authorization.Attributes;
-using HomeSeeker.API.Commands.HomeCommands;
+using HomeSeeker.API.Commands.HomeCommands.AddHome;
+using HomeSeeker.API.Commands.HomeCommands.DeleteHome;
+using HomeSeeker.API.Commands.HomeCommands.UpdateHome;
 using HomeSeeker.API.Models;
 using HomeSeeker.API.Models.CustomResults;
-using HomeSeeker.API.Queries.HomeQueries;
+using HomeSeeker.API.Queries.HomeQueries.GetActiveHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetAllHomes;
+using HomeSeeker.API.Queries.HomeQueries.GetHomeById;
+using HomeSeeker.API.Queries.HomeQueries.GetHomesByUserId;
+using HomeSeeker.API.Queries.HomeQueries.GetMaxPrice;
 
 using MediatR;
 

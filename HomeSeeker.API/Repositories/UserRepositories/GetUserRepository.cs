@@ -15,9 +15,9 @@ namespace HomeSeeker.API.Repositories.UserRepositories
 {
     public class GetUserRepository : IGetRepositoryBase<UserModel>
     {
-        private readonly HomeSeekerDBContext _dbContext;
+        private readonly IDbContext _dbContext;
 
-        public GetUserRepository(HomeSeekerDBContext dbContext)
+        public GetUserRepository(IDbContext dbContext)
         {
             _dbContext = dbContext;
         }

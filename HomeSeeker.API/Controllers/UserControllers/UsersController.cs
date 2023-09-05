@@ -1,6 +1,8 @@
 ﻿using HomeSeeker.API.Authorization.Attributes;
-using HomeSeeker.API.Commands.UserCommands;
-using HomeSeeker.API.Queries.UserQueries;
+using HomeSeeker.API.Models;
+using HomeSeeker.API.Models.CustomResults;
+using HomeSeeker.API.Queries.UserQueries.Authenticate;
+using HomeSeeker.API.Queries.UserQueries.GetAllUsers;
 
 using MediatR;
 
@@ -11,13 +13,11 @@ using Data.Enums;
 
 using System.Threading.Tasks;
 using System;
-using HomeSeeker.API.Models;
-using HomeSeeker.API.Models.CustomResults;
 using System.Collections.Generic;
+using HomeSeeker.API.Commands.UserCommands.RegisterUser;
 
 namespace HomeSeeker.API.Controllers.UserControllers
 {
-
     [Authorize(Role.Admin)]
     [Route("api/[controller]")]
     [ApiController]

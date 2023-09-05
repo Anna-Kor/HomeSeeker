@@ -16,9 +16,9 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
 {
     public class GetHomeRepository : IGetHomeRepository
     {
-        private readonly HomeSeekerDBContext _dbContext;
+        private readonly IDbContext _dbContext;
 
-        public GetHomeRepository(HomeSeekerDBContext dbContext)
+        public GetHomeRepository(IDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -117,7 +117,7 @@ namespace HomeSeeker.API.Repositories.HomeRepositories
 
             if (filterValues.City != null)
             {
-                homeEntities = homeEntities.Where(p => p.City.Contains(filterValues.City));
+                homeEntities = homeEntities.Where(p => p.City.Equals(filterValues.City));
             }
 
             return homeEntities;

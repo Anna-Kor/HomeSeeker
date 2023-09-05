@@ -1,8 +1,7 @@
 ﻿using HomeSeeker.API.Authorization.Helpers;
 using HomeSeeker.API.Authorization.Utils;
 using HomeSeeker.API.Models;
-using HomeSeeker.API.Queries;
-using HomeSeeker.API.Queries.UserQueries;
+using HomeSeeker.API.Queries.UserQueries.Authenticate;
 using HomeSeeker.API.Repositories;
 
 using NSubstitute;
@@ -31,7 +30,7 @@ namespace HomeSeeker.Tests.UsersTests
             _passwordHelperMock.VerifyPassword(default, default, default).ReturnsForAnyArgs(true);
             _getUserRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = query.Username, Password = query.Password } });
             
-            var handler = new UsersQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
+            var handler = new AuthenticateQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
 
             var result = await handler.Handle(query, default);
 
@@ -44,7 +43,7 @@ namespace HomeSeeker.Tests.UsersTests
         {
             var query = new AuthenticateQuery(username, password);
 
-            var handler = new UsersQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
+            var handler = new AuthenticateQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
 
             var result = await handler.Handle(query, default);
 
@@ -61,7 +60,7 @@ namespace HomeSeeker.Tests.UsersTests
             _passwordHelperMock.VerifyPassword(default, default, default).ReturnsForAnyArgs(true);
             _getUserRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = "somethingelse", Password = query.Password } });
 
-            var handler = new UsersQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
+            var handler = new AuthenticateQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
 
             var result = await handler.Handle(query, default);
 
@@ -78,7 +77,7 @@ namespace HomeSeeker.Tests.UsersTests
             _passwordHelperMock.VerifyPassword(default, default, default).ReturnsForAnyArgs(false);
             _getUserRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = query.Username, Password = query.Password } });
 
-            var handler = new UsersQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
+            var handler = new AuthenticateQueryHandler(_getUserRepositoryMock, _jwtUtils, _passwordHelperMock);
 
             var result = await handler.Handle(query, default);
 

@@ -1,9 +1,9 @@
 ﻿using Data.Models;
+
 using FluentAssertions;
 
 using HomeSeeker.API.Authorization.Helpers;
-using HomeSeeker.API.Commands;
-using HomeSeeker.API.Commands.UserCommands;
+using HomeSeeker.API.Commands.UserCommands.RegisterUser;
 using HomeSeeker.API.Models;
 using HomeSeeker.API.Models.CustomResults;
 using HomeSeeker.API.Repositories;
@@ -35,7 +35,7 @@ namespace HomeSeeker.Tests.UsersTests
         [MemberData(nameof(Data))]
         public async void RegisterUser_WhereDataAreCorrect_ShouldReturnOk(RegisterUserCommand command)
         {
-            var handler = new UsersCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
+            var handler = new RegisterUserCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
 
             var result = await handler.Handle(command, default);
 
@@ -48,7 +48,7 @@ namespace HomeSeeker.Tests.UsersTests
         public async void RegisterUser_WhereUsernameExists_ShouldReturnError(RegisterUserCommand command)
         {
             _getUserRepositoryMock.GetAll(default).ReturnsForAnyArgs(new List<UserModel> { new UserModel { Username = command.Username } });
-            var handler = new UsersCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
+            var handler = new RegisterUserCommandHandler(_getUserRepositoryMock, _userOperationsRepositoryMock, _passwordHelperMock);
 
             var result = await handler.Handle(command, default);
 
