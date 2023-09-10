@@ -3,6 +3,7 @@
     import { storeToRefs } from 'pinia';
     import { useRoute } from 'vue-router'
 
+    import { type IHomeModel } from '@/clients';
     import { useAnnouncementsStore, type IGetActiveHomesQuery } from '@/stores';
     import { router } from '@/router';
 
@@ -13,12 +14,12 @@
     const announcementsStore = useAnnouncementsStore();
     const { homes, maxPrice } = storeToRefs(announcementsStore);
 
-    const name = ref(route.query.name ?? null as string | null);
+    const name = ref(route.query.name as string | null ?? null);
     const price = ref({
-        min: route.query.priceFrom ?? 0 as number,
-        max: route.query.priceTo ?? null as number | null
+        min: route.query.priceFrom as number | null ?? 0,
+        max: route.query.priceTo as number | null ?? null
     });
-    const city = ref(route.query.city ?? null as string | null);
+    const city = ref(route.query.city as string | null ?? null);
 
     const isLoading = ref(true);
 
@@ -39,7 +40,7 @@
         isLoading.value = true;
         announcementsStore.getMaxPrice().then(() => {
             isLoading.value = false;
-            price.value.max = maxPrice.value;
+            price.value.max = maxPrice.value as number | null;
         })
     };
 
@@ -51,7 +52,7 @@
         router.push({ path: 'list' });
         name.value = null;
         price.value.min = 0;
-        price.value.max = maxPrice.value;
+        price.value.max = maxPrice.value as number | null;
         city.value = null;
     };
 </script>
@@ -79,7 +80,7 @@
                     <q-btn label="Remove filters" type="reset" color="primary" flat class="q-ml-sm" />
                 </div>
             </q-form>
-            <AnnouncementsListVue :items="homes" />
+            <AnnouncementsListVue :items="(homes as IHomeModel[] | undefined)" />
         </div>
     </div>
 </template>
