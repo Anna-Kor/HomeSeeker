@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia';
-import { type IHomeModel, HomesClient } from '@/clients';
+import { type IHomeModel, HomesClient, type IDeleteHomeCommand, DeleteHomeCommand } from '@/clients';
 import { getErrorMessage } from '@/helpers';
 import { useAlertStore, useAuthStore } from '@/stores';
 
@@ -64,6 +64,21 @@ export const useAnnouncementsStore = defineStore({
             const { user } = storeToRefs(authStore);
             try {
                 client.setAuthToken(user.value?.token || undefined);
+                this.homes = await client.getByUser() as IHomeModel[];
+            } catch (error) {
+                alertStore.error(getErrorMessage(error));
+            }
+        },
+        async delete(id: number) {
+            const alertStore = useAlertStore();
+
+            const authStore = useAuthStore();
+            const { user } = storeToRefs(authStore);
+            try {
+                client.setAuthToken(user.value?.token || undefined);
+                const command = new DeleteHomeCommand({ id } as IDeleteHomeCommand);
+
+                await client.delete(command);
                 this.homes = await client.getByUser() as IHomeModel[];
             } catch (error) {
                 alertStore.error(getErrorMessage(error));
