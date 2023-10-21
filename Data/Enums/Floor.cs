@@ -1,25 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum Floor
     {
-        [Display(Name = "Suterena")]
+        [EnumMember(Value = "Suterena")]
         Basement = 0,
 
-        [Display(Name = "Parter")]
-        GroundFloor = 0,
+        [EnumMember(Value = "Parter")]
+        GroundFloor = 1,
 
-        [Display(Name = "1")]
-        FirstFloor = 1,
+        [EnumMember(Value = "1")]
+        FirstFloor = 2,
 
-        [Display(Name = "2")]
-        SecondFloor = 2,
+        [EnumMember(Value = "2")]
+        SecondFloor = 3,
 
-        [Display(Name = "3")]
-        ThirdFloor = 3,
+        [EnumMember(Value = "3")]
+        ThirdFloor = 4,
 
-        [Display(Name = "4")]
-        FourthFloor = 4
+        [EnumMember(Value = "4")]
+        FourthFloor = 5
     }
 }

@@ -4,7 +4,10 @@
     color: var(--vt-c-white) !important;
 }
 
-.q-field__label, .q-placeholder, .q-item__section--side:not(.q-img__content.absolute-bottom.q-item.q-item__section.q-item__section--side) {
+.q-field__label,
+.q-field__native,
+.q-placeholder,
+.q-item__section--side:not(.q-img__content.absolute-bottom.q-item.q-item__section.q-item__section--side) {
     color: var(--color-text) !important;
     transition: color 0.5s;
 }

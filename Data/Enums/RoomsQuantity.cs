@@ -1,19 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum RoomsQuantity
     {
-        [Display(Name = "1 pokój")]
+        [EnumMember(Value = "1 pokój")]
         One = 1,
 
-        [Display(Name = "2 pokoje")]
+        [EnumMember(Value = "2 pokoje")]
         Two = 2,
 
-        [Display(Name = "3 pokoje")]
+        [EnumMember(Value = "3 pokoje")]
         Three = 3,
 
-        [Display(Name = "4 i więcej")]
+        [EnumMember(Value = "4 i więcej")]
         FourAndMore = 4
     }
 }

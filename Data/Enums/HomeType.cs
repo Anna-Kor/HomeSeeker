@@ -1,13 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum HomeType
     {
-        [Display(Name = "Na wynajem")]
+        [EnumMember(Value = "Na wynajem")]
         ForRent = 0,
 
-        [Display(Name = "Na sprzedaż")]
+        [EnumMember(Value = "Na sprzedaż")]
         ForSale = 1
     }
 }

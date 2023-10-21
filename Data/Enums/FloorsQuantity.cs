@@ -1,19 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum FloorsQuantity
     {
-        [Display(Name = "Parterowy")]
+        [EnumMember(Value = "Parterowy")]
         GroundStory = 1,
 
-        [Display(Name = "Parterowy z użytkowym poddaszem")]
+        [EnumMember(Value = "Parterowy z użytkowym poddaszem")]
         GroundStoryOneWithUsableAttic = 2,
 
-        [Display(Name = "Jednopiętrowy")]
+        [EnumMember(Value = "Jednopiętrowy")]
         SingleStory = 3,
 
-        [Display(Name = "Dwupiętrowy i więcej")]
+        [EnumMember(Value = "Dwupiętrowy i więcej")]
         TwoStoryAndMore = 4
     }
 }

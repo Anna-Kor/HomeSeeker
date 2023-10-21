@@ -13,7 +13,7 @@ export const useUsersStore = defineStore({
         async register(user: IRegisterUserCommand) {
             const alertStore = useAlertStore();
             try {
-                await client.register(new RegisterUserCommand(user as IRegisterUserCommand));
+                await client.register(new RegisterUserCommand(user));
                 await router.push('/account/login');
                 alertStore.success('Registration successful');
             } catch (error) {

@@ -8,7 +8,7 @@
     import { router } from '@/router';
 
     import AnnouncementsListVue from '@/components/announcements/AnnouncementsList.vue';
-    import { QBtn, QForm, QInput, QRange, QSpinner } from 'quasar';
+    import { QBtn, QForm, QInput, QRange, QSelect, QSpinner } from 'quasar';
 
     const route = useRoute()
     const announcementsStore = useAnnouncementsStore();
@@ -21,6 +21,10 @@
     });
     const city = ref(route.query.city as string | null ?? null);
 
+    const cities = [
+        'Warszawa', 'Lublin', 'Rzeszów', 'Gdynia', 'Wrocław'
+    ]
+
     const isLoading = ref(true);
 
     onMounted(() => {
@@ -28,6 +32,22 @@
         getMaxPrice();
     });
     watch(route, () => fetchData());
+
+    const filteredCities = ref(cities);
+
+    function filterFn(val: string, update: any) {
+        if (val === '') {
+            update(() => {
+                filteredCities.value = cities
+            })
+            return
+        }
+
+        update(() => {
+            const needle = val.toLowerCase()
+            filteredCities.value = cities.filter(v => v.toLowerCase().indexOf(needle) > -1)
+        })
+    }
 
     function fetchData() {
         isLoading.value = true;
@@ -75,6 +95,14 @@
                          :left-label-value="'Price from: ' + price.min"
                          :right-label-value="'Price to: ' + price.max"
                          label-always />
+                <q-select filled
+                          use-input
+                          input-debounce="0"
+                          v-model="city"
+                          :options="filteredCities"
+                          label="City"
+                          @filter="filterFn"
+                          behavior="menu" />
                 <div>
                     <q-btn label="Filter" type="submit" color="primary" />
                     <q-btn label="Remove filters" type="reset" color="primary" flat class="q-ml-sm" />

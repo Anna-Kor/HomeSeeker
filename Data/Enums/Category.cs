@@ -1,13 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace Data.Enums
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum Category
     {
-        [Display(Name = "Dom")]
+        [EnumMember(Value = "Dom")]
         House = 0,
 
-        [Display(Name = "Mieszkanie")]
+        [EnumMember(Value = "Mieszkanie")]
         Flat = 1
     }
 }

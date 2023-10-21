@@ -16,7 +16,6 @@
     <Folder Include="src\components\__tests__\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\stores\" />
-    <Folder Include="src\router\" />
     <Folder Include="src\views\account\" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia';
-import { type IHomeModel, HomesClient, type IDeleteHomeCommand, DeleteHomeCommand } from '@/clients';
+import { type IHomeModel, HomesClient, type IDeleteHomeCommand, DeleteHomeCommand, type IAddHomeCommand, AddHomeCommand } from '@/clients';
 import { getErrorMessage } from '@/helpers';
 import { useAlertStore, useAuthStore } from '@/stores';
+import { router } from '@/router';
 
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 const client = new HomesClient(baseUrl);
@@ -29,6 +30,19 @@ export const useAnnouncementsStore = defineStore({
         }
     },
     actions: {
+        async addHome(home: IAddHomeCommand) {
+            const alertStore = useAlertStore();
+
+            const authStore = useAuthStore();
+            const { user } = storeToRefs(authStore);
+            try {
+                client.setAuthToken(user.value?.token || undefined);
+                await client.add(new AddHomeCommand(home as IAddHomeCommand));
+                await router.push('/announcement/myAnnouncements');
+            } catch (error) {
+                alertStore.error(getErrorMessage(error));
+            }
+        },
         async getMaxPrice() {
             const alertStore = useAlertStore();
             try {

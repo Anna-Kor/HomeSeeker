@@ -1,36 +1,31 @@
 <script setup lang="ts">
     import { Form } from 'vee-validate';
     import { QBtn } from 'quasar';
-    import QInputWithValidationVue from '@/components/common/QInputWithValidation.vue';
+    import QInputWithValidationVue from '@/components/quasar-extensions/QInputWithValidation.vue';
 
     import * as Yup from 'yup';
     import { type IAuthenticateQuery } from '@/clients';
     import { useAuthStore } from '@/stores';
-
-    function getSubmitFn<IAuthenticateQuery extends Yup.ObjectSchema<Record<string, any>>>(
-      _: IAuthenticateQuery,
-      callback: (values: Yup.InferType<IAuthenticateQuery>) => void
-    ) {
-      return (values: Record<string, any>) => {
-        return callback(values);
-      };
-    }
 
     const schema = Yup.object().shape({
         username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required')
     });
 
-    const onSubmit = getSubmitFn(schema, async (values: IAuthenticateQuery) => {
-        const authStore = useAuthStore();
-        const { username, password } = values;
-        await authStore.login(username, password);
-    });
+    async function onSubmit(values: any) {
+        try {
+            schema.validateSync(values);
+            const authStore = useAuthStore();
+            await authStore.login(values as IAuthenticateQuery);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 </script>
 
 
 <template>
-    <Form class="q-pa-lg rounded-borders" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
+    <Form class="q-pa-lg rounded-borders" style="width: 400px" @submit="onSubmit" :validation-schema="schema" v-slot="{ isSubmitting }">
         <h4 class="q-py-lg">Login</h4>
 
         <QInputWithValidationVue label="Username" name="username" type="text" />

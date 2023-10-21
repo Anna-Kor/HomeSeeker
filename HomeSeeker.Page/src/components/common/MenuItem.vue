@@ -10,11 +10,11 @@
 <template>
     <q-menu v-if="user">
         <q-list>
-            <q-item clickable flat v-close-popup>
-                <q-item-section>Add home</q-item-section>
+            <q-item clickable flat v-close-popup to="/announcement/addAnnouncement">
+                <q-item-section>Add announcement</q-item-section>
             </q-item>
-            <q-item clickable flat v-close-popup to="/announcement/myHomesList">
-                <q-item-section>My homes</q-item-section>
+            <q-item clickable flat v-close-popup to="/announcement/myAnnouncements">
+                <q-item-section>My announcements</q-item-section>
             </q-item>
             <q-separator />
             <q-item clickable flat v-close-popup @click="authStore.logout()">

@@ -26,8 +26,6 @@ namespace HomeSeeker.API.Commands.HomeCommands.AddHome
                 Name = request.Name,
                 Price = request.Price,
                 Rent = request.Rent,
-                Lon = request.Lon,
-                Lat = request.Lat,
                 City = request.City,
                 LivingArea = request.LivingArea,
                 LotArea = request.LotArea,
