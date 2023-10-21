@@ -8,7 +8,8 @@ It currently contains:
 * client features for creating and registering user 
 * list of available announcements and possibility to display details of the chosen one
 * basic filters
-* list of current user announcements
+* list of current user announcements and possibility to remove them
+* form for announcement addition
 <br><br>
 New features will be coming up soon.
 
