@@ -7,10 +7,10 @@ namespace Data.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum HomeType
     {
-        [EnumMember(Value = "Na wynajem")]
+        [EnumMember(Value = "For rent")]
         ForRent = 0,
 
-        [EnumMember(Value = "Na sprzedaż")]
+        [EnumMember(Value = "For sale")]
         ForSale = 1
     }
 }

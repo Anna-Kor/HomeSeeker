@@ -7,10 +7,10 @@ namespace Data.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Category
     {
-        [EnumMember(Value = "Dom")]
+        [EnumMember(Value = "House")]
         House = 0,
 
-        [EnumMember(Value = "Mieszkanie")]
+        [EnumMember(Value = "Flat")]
         Flat = 1
     }
 }

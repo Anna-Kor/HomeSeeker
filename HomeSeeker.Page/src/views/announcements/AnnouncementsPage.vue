@@ -12,7 +12,7 @@
 
     const route = useRoute()
     const announcementsStore = useAnnouncementsStore();
-    const { homes, maxPrice } = storeToRefs(announcementsStore);
+    const { cities, homes, maxPrice } = storeToRefs(announcementsStore);
 
     const name = ref(route.query.name as string | null ?? null);
     const price = ref({
@@ -20,10 +20,6 @@
         max: route.query.priceTo as number | null ?? null
     });
     const city = ref(route.query.city as string | null ?? null);
-
-    const cities = [
-        'Warszawa', 'Lublin', 'Rzeszów', 'Gdynia', 'Wrocław'
-    ]
 
     const isLoading = ref(true);
 
@@ -38,14 +34,14 @@
     function filterFn(val: string, update: any) {
         if (val === '') {
             update(() => {
-                filteredCities.value = cities
+                filteredCities.value = cities.value
             })
             return
         }
 
         update(() => {
             const needle = val.toLowerCase()
-            filteredCities.value = cities.filter(v => v.toLowerCase().indexOf(needle) > -1)
+            filteredCities.value = cities.value.filter(v => v.toLowerCase().indexOf(needle) > -1)
         })
     }
 

@@ -26,7 +26,7 @@
                     <q-item>
                         <q-item-section>
                             <q-item-label>{{ item.name }}</q-item-label>
-                            <q-item-label>{{ item.price || item.rent }} PLN</q-item-label>
+                            <q-item-label>${{ item.price || item.rent }}</q-item-label>
                         </q-item-section>
                         <q-item-section side>
                             <q-item-label>Rooms: {{ item.roomsQuantity }}</q-item-label>

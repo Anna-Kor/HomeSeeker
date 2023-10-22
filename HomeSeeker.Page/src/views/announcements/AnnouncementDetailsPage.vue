@@ -31,7 +31,7 @@
                 </q-item-section>
 
                 <q-item-section side top>
-                    <h5 class="text-weight-medium">{{ home?.price || home?.rent }} PLN</h5>
+                    <h5 class="text-weight-medium">${{ home?.price || home?.rent }}</h5>
                 </q-item-section>
             </q-item>
 
@@ -53,9 +53,7 @@
             <q-separator />
 
             <q-item class="q-pa-lg">
-                <q-item-section>
-                    <q-item-label>{{ home?.description }}</q-item-label>
-                </q-item-section>
+                <p class="wrapped-text">{{ home?.description }}</p>
             </q-item>
         </div>
     </div>

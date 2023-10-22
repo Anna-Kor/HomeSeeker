@@ -49,3 +49,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 .v-leave-to {
     opacity: 0;
 }
+
+.wrapped-text {
+    white-space: pre-wrap; /* or pre-line */
+}

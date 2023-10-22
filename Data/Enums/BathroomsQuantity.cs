@@ -7,16 +7,16 @@ namespace Data.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum BathroomsQuantity
     {
-        [EnumMember(Value = "1 łazienka")]
+        [EnumMember(Value = "1 bathroom")]
         One = 1,
 
-        [EnumMember(Value = "2 łazienki")]
+        [EnumMember(Value = "2 bathrooms")]
         Two = 2,
 
-        [EnumMember(Value = "3 łazienki")]
+        [EnumMember(Value = "3 bathrooms")]
         Three = 3,
 
-        [EnumMember(Value = "4 i więcej")]
+        [EnumMember(Value = "4 and more")]
         FourAndMore = 4
     }
 }

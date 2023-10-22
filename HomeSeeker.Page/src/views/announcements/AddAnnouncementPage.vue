@@ -11,9 +11,8 @@
     const authStore = useAuthStore();
     const { user } = storeToRefs(authStore);
 
-    const cities = [
-        'Warszawa', 'Lublin', 'Rzeszów', 'Gdynia', 'Wrocław'
-    ]
+    const announcementsStore = useAnnouncementsStore();
+    const { cities } = storeToRefs(announcementsStore);
 
     const schema = Yup.object().shape({
         category: Yup.mixed<Category>()
@@ -102,7 +101,6 @@
     const onSubmit = handleSubmit( async (values: any) => {
         try {
             values.createdUserId = user.value?.id as number;
-            const announcementsStore = useAnnouncementsStore();
             await announcementsStore.addHome(values as IAddHomeCommand);
         } catch (error) {
             console.log(error);
@@ -140,14 +138,14 @@
     function citiesFilterFn(val: string, update: any) {
         if (val === '') {
             update(() => {
-                filteredCities.value = cities;
+                filteredCities.value = cities.value;
             })
             return
         }
 
         update(() => {
             const needle = val.toLowerCase()
-            filteredCities.value = cities.filter(v => v.toLowerCase().indexOf(needle) > -1)
+            filteredCities.value = cities.value.filter(v => v.toLowerCase().indexOf(needle) > -1)
         })
     };
 
@@ -308,7 +306,7 @@
                             :error="!!floorError"
                             :error-message="floorError"
                             v-if="category === Category.Flat"
-                            style="flex: 1; margin: 10px;" />
+                            style="flex: 1;" />
                 
                 <q-select filled
                             use-input
@@ -321,7 +319,7 @@
                             :error="!!floorsQuantityError"
                             :error-message="floorsQuantityError"
                             v-if="category === Category.House"
-                            style="flex: 1; margin: 10px;" />
+                            style="flex: 1;" />
             </div>
 
             <q-checkbox v-model="hasFurniture" label="Furniture" style="padding-bottom: 20px;" />

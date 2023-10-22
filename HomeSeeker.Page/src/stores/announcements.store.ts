@@ -7,10 +7,15 @@ import { router } from '@/router';
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 const client = new HomesClient(baseUrl);
 
+const cities = [
+    'Warszawa', 'Lublin', 'Rzeszów', 'Gdynia', 'Wrocław'
+]
+
 interface IAnnouncementsState {
     home: IHomeModel | null,
     homes: IHomeModel[] | null,
-    maxPrice: number | undefined
+    maxPrice: number | undefined,
+    cities: string[]
 }
 
 export interface IGetActiveHomesQuery {
@@ -26,7 +31,8 @@ export const useAnnouncementsStore = defineStore({
         return {
             home: null,
             homes: null,
-            maxPrice: undefined
+            maxPrice: undefined,
+            cities: cities
         }
     },
     actions: {

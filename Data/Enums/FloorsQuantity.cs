@@ -7,16 +7,16 @@ namespace Data.Enums
     [JsonConverter(typeof(StringEnumConverter))]
     public enum FloorsQuantity
     {
-        [EnumMember(Value = "Parterowy")]
+        [EnumMember(Value = "Ground-story")]
         GroundStory = 1,
 
-        [EnumMember(Value = "Parterowy z użytkowym poddaszem")]
-        GroundStoryOneWithUsableAttic = 2,
+        [EnumMember(Value = "Ground-story with usable attic")]
+        GroundStoryWithUsableAttic = 2,
 
-        [EnumMember(Value = "Jednopiętrowy")]
+        [EnumMember(Value = "Single-story")]
         SingleStory = 3,
 
-        [EnumMember(Value = "Dwupiętrowy i więcej")]
+        [EnumMember(Value = "Two-story and more")]
         TwoStoryAndMore = 4
     }
 }
